@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDE9DC"/><stop offset="1" stop-color="#F1C2A1"/></linearGradient>
+</defs>
+<rect width="800" height="600" fill="url(#bg)"/>
+<circle cx="400" cy="300" r="235" fill="#ffffff" opacity="0.35"/>
+
+  <path d="M274 220 q-16 -26 0 -52 q16 -26 0 -52" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.75"/><path d="M326 220 q-16 -26 0 -52 q16 -26 0 -52" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.63"/><path d="M378 220 q-16 -26 0 -52 q16 -26 0 -52" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.51"/>
+  <path d="M196 358 a204 106 0 0 0 408 0 Z" fill="#ffffff"/>
+  <ellipse cx="400" cy="358" rx="204" ry="50" fill="#E9A23B"/>
+  
+  <g transform="translate(318 354)"><path d="M-46 -6 q11 -12 23 0 q11 12 23 0 q11 -12 23 0 q11 12 23 0" stroke="#F6E7C8" stroke-width="9" fill="none" stroke-linecap="round"/></g>
+  <g transform="translate(400 348)"><path d="M-46 -6 q11 -12 23 0 q11 12 23 0 q11 -12 23 0 q11 12 23 0" stroke="#F6E7C8" stroke-width="9" fill="none" stroke-linecap="round"/></g>
+  <g transform="translate(482 354)"><path d="M-46 -6 q11 -12 23 0 q11 12 23 0 q11 -12 23 0 q11 12 23 0" stroke="#F6E7C8" stroke-width="9" fill="none" stroke-linecap="round"/></g>
+  <ellipse cx="398" cy="330" rx="40" ry="17" fill="#F3A68B"/>
+  <circle cx="398" cy="326" r="9" fill="#FFF6E8"/><circle cx="398" cy="326" r="4.5" fill="#F2B33D"/>
+  <rect x="472" y="300" width="30" height="46" rx="4" fill="#2F4436"/>
+  <rect x="476" y="304" width="22" height="8" fill="#ffffff" opacity="0.25"/>
+  <rect x="298" y="318" width="36" height="30" rx="7" fill="#F7EFE2" stroke="#E4D6BE" stroke-width="3"/>
+  <g transform="translate(400 300) rotate(24)"><rect x="-7" y="-152" width="13" height="152" rx="6" fill="#B07A45"/><rect x="9" y="-152" width="13" height="152" rx="6" fill="#B07A45"/></g>
+  <path d="M592 188 l5 14 14 6 -14 6 -5 14 -5 -14 -14 -6 14 -6 Z" fill="#ffffff" opacity="0.9"/>
+
+</svg>

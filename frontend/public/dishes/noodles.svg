@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1DC"/><stop offset="1" stop-color="#F2D19C"/></linearGradient>
+</defs>
+<rect width="800" height="600" fill="url(#bg)"/>
+<circle cx="400" cy="300" r="235" fill="#ffffff" opacity="0.35"/>
+
+  <path d="M278 252 q-16 -26 0 -52 q16 -26 0 -52" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.60"/><path d="M330 252 q-16 -26 0 -52 q16 -26 0 -52" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.48"/><path d="M382 252 q-16 -26 0 -52 q16 -26 0 -52" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.36"/>
+  <ellipse cx="400" cy="412" rx="238" ry="70" fill="#ffffff"/>
+  <ellipse cx="400" cy="402" rx="206" ry="56" fill="#F6EFDF"/>
+  
+  <g transform="translate(324 398)"><path d="M-52 -8 q13 -14 26 0 q13 14 26 0 q13 -14 26 0 q13 14 26 0" stroke="#F2D98A" stroke-width="11" fill="none" stroke-linecap="round"/></g>
+  <g transform="translate(400 388)"><path d="M-52 -8 q13 -14 26 0 q13 14 26 0 q13 -14 26 0 q13 14 26 0" stroke="#F2D98A" stroke-width="11" fill="none" stroke-linecap="round"/></g>
+  <g transform="translate(476 398)"><path d="M-52 -8 q13 -14 26 0 q13 14 26 0 q13 -14 26 0 q13 14 26 0" stroke="#F2D98A" stroke-width="11" fill="none" stroke-linecap="round"/></g>
+  <circle cx="334" cy="384" r="9" fill="#E5533C"/><circle cx="412" cy="374" r="9" fill="#7FB069"/><circle cx="472" cy="388" r="9" fill="#E5533C"/>
+  <g transform="translate(452 318) rotate(26)"><rect x="-7" y="-162" width="14" height="162" rx="7" fill="#B07A45"/><rect x="9" y="-162" width="14" height="162" rx="7" fill="#B07A45"/></g>
+
+</svg>

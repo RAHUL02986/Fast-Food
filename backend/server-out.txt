@@ -1,0 +1,118 @@
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Failed running 'src/server.js'. Waiting for file changes before restarting...
+Restarting 'src/server.js'
+Restarting 'src/server.js'
+✓ Connected to MongoDB
+✓ Quick Food API listening on http://localhost:4000
+✓ Environment: development

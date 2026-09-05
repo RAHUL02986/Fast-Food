@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF0D6"/><stop offset="1" stop-color="#F6D9A0"/></linearGradient>
+</defs>
+<rect width="800" height="600" fill="url(#bg)"/>
+<circle cx="400" cy="300" r="235" fill="#ffffff" opacity="0.35"/>
+
+  <circle cx="400" cy="330" r="188" fill="#E8B04B"/>
+  <circle cx="400" cy="330" r="168" fill="#F6C860"/>
+  <circle cx="400" cy="330" r="152" fill="#E2603F"/>
+  <circle cx="400" cy="330" r="142" fill="#EF7B4F"/>
+  <circle cx="338" cy="286" r="21" fill="#C43D2F"/><circle cx="452" cy="268" r="21" fill="#C43D2F"/><circle cx="484" cy="376" r="21" fill="#C43D2F"/><circle cx="350" cy="392" r="21" fill="#C43D2F"/><circle cx="400" cy="330" r="21" fill="#C43D2F"/>
+  <circle cx="298" cy="352" r="9" fill="#7FB069"/><circle cx="420" cy="234" r="9" fill="#7FB069"/><circle cx="500" cy="318" r="9" fill="#7FB069"/><circle cx="328" cy="438" r="9" fill="#7FB069"/>
+  <path d="M204 160 l5.5 15.400000000000002 15.400000000000002 6.6000000000000005 -15.400000000000002 6.6000000000000005 -5.5 15.400000000000002 -5.5 -15.400000000000002 -15.400000000000002 -6.6000000000000005 15.400000000000002 -6.6000000000000005 Z" fill="#ffffff" opacity="0.9"/>
+
+</svg>

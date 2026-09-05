@@ -1,0 +1,29 @@
+
+> quick-food-frontend@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 11.4s
+ ○ Compiling / ...
+ ✓ Compiled / in 6.3s (574 modules)
+ GET / 200 in 7161ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 1154ms (560 modules)
+ ○ Compiling /admin/restaurants ...
+ ✓ Compiled /admin/restaurants in 970ms (570 modules)
+ ○ Compiling /login ...
+ ✓ Compiled /login in 1007ms (576 modules)
+ ✓ Compiled / in 301ms (302 modules)
+ GET / 200 in 714ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 3.8s (597 modules)
+ GET / 404 in 4037ms
+ GET / 404 in 144ms
+ GET /_next/static/chunks/main-app.js?v=1788421965073 404 in 890ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 829ms
+ GET /_next/static/chunks/app/not-found.js 404 in 821ms
+ GET /_next/static/chunks/app/error.js 404 in 798ms
+[?25h

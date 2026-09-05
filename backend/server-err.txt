@@ -1,0 +1,372 @@
+node:events:496
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (C:\Users\munis\Downloads\Quick-food\backend\node_modules\express\lib\application.js:635:24)
+    at start (file:///C:/Users/munis/Downloads/Quick-food/backend/src/server.js:92:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1975:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 4000
+}
+
+Node.js v22.16.0
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: MongoServerError: E11000 duplicate key error collection: fast-food.users index: phone_1 dup key: { phone: "7807102986" }
+    at InsertOneOperation.handleOk (C:\Users\munis\Downloads\Quick-food\backend\node_modules\mongodb\lib\operations\insert.js:51:19)
+    at tryOperation (C:\Users\munis\Downloads\Quick-food\backend\node_modules\mongodb\lib\operations\execute_operation.js:214:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async executeOperation (C:\Users\munis\Downloads\Quick-food\backend\node_modules\mongodb\lib\operations\execute_operation.js:78:16)
+    at async Collection.insertOne (C:\Users\munis\Downloads\Quick-food\backend\node_modules\mongodb\lib\collection.js:154:16) {
+  errorLabelSet: Set(0) {},
+  errorResponse: {
+    index: 0,
+    code: 11000,
+    errmsg: 'E11000 duplicate key error collection: fast-food.users index: phone_1 dup key: { phone: "7807102986" }',
+    keyPattern: { phone: 1 },
+    keyValue: { phone: '7807102986' }
+  },
+  index: 0,
+  code: 11000,
+  keyPattern: { phone: 1 },
+  keyValue: { phone: '7807102986' }
+}
+file:///C:/Users/munis/Downloads/Quick-food/backend/src/routes/deliveryRoutes.js:43
+  createPayout,
+  ^^^^^^^^^^^^
+
+SyntaxError: Identifier 'createPayout' has already been declared
+    at compileSourceTextModule (node:internal/modules/esm/utils:344:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:105:18)
+    at #translate (node:internal/modules/esm/loader:534:12)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:581:27)
+
+Node.js v22.16.0
+file:///C:/Users/munis/Downloads/Quick-food/backend/src/routes/deliveryRoutes.js:43
+  createPayout,
+  ^^^^^^^^^^^^
+
+SyntaxError: Identifier 'createPayout' has already been declared
+    at compileSourceTextModule (node:internal/modules/esm/utils:344:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:105:18)
+    at #translate (node:internal/modules/esm/loader:534:12)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:581:27)
+
+Node.js v22.16.0
+file:///C:/Users/munis/Downloads/Quick-food/backend/src/routes/deliveryRoutes.js:43
+  createPayout,
+  ^^^^^^^^^^^^
+
+SyntaxError: Identifier 'createPayout' has already been declared
+    at compileSourceTextModule (node:internal/modules/esm/utils:344:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:105:18)
+    at #translate (node:internal/modules/esm/loader:534:12)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:581:27)
+
+Node.js v22.16.0
+node:internal/modules/esm/resolve:275
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\Users\munis\Downloads\Quick-food\backend\src\routes\deliveryRoutes.js' imported from C:\Users\munis\Downloads\Quick-food\backend\src\server.js
+    at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    at moduleResolve (node:internal/modules/esm/resolve:860:10)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:137:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///C:/Users/munis/Downloads/Quick-food/backend/src/routes/deliveryRoutes.js'
+}
+
+Node.js v22.16.0
+file:///C:/Users/munis/Downloads/Quick-food/backend/src/routes/deliveryRoutes.js:36
+  markPayoutPaid,
+  ^^^^^^^^^^^^^^
+SyntaxError: The requested module '../controllers/deliveryController.js' does not provide an export named 'markPayoutPaid'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:182:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:266:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.16.0
+file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:1559
+};
+^
+
+SyntaxError: Unexpected token '}'
+    at compileSourceTextModule (node:internal/modules/esm/utils:344:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:105:18)
+    at #translate (node:internal/modules/esm/loader:534:12)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:581:27)
+
+Node.js v22.16.0
+file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:1607
+export const markPayoutPaid = async (req, res, next) => {
+             ^
+
+SyntaxError: Identifier 'markPayoutPaid' has already been declared
+    at compileSourceTextModule (node:internal/modules/esm/utils:344:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:105:18)
+    at #translate (node:internal/modules/esm/loader:534:12)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:581:27)
+
+Node.js v22.16.0
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:1557
+};
+^
+
+SyntaxError: Unexpected token '}'
+    at compileSourceTextModule (node:internal/modules/esm/utils:344:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:105:18)
+    at #translate (node:internal/modules/esm/loader:534:12)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:581:27)
+
+Node.js v22.16.0
+file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:1605
+export const markPayoutPaid = async (req, res, next) => {
+             ^
+
+SyntaxError: Identifier 'markPayoutPaid' has already been declared
+    at compileSourceTextModule (node:internal/modules/esm/utils:344:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:105:18)
+    at #translate (node:internal/modules/esm/loader:534:12)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:581:27)
+
+Node.js v22.16.0
+node:events:496
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (C:\Users\munis\Downloads\Quick-food\backend\node_modules\express\lib\application.js:635:24)
+    at start (file:///C:/Users/munis/Downloads/Quick-food/backend/src/server.js:94:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1975:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 4000
+}
+
+Node.js v22.16.0
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Error: ReferenceError: partnerUserId is not defined
+    at file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:777:35
+    at Array.map (<anonymous>)
+    at listDeliveryPartners (file:///C:/Users/munis/Downloads/Quick-food/backend/src/controllers/deliveryController.js:775:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+node:events:496
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at Function.listen (C:\Users\munis\Downloads\Quick-food\backend\node_modules\express\lib\application.js:635:24)
+    at start (file:///C:/Users/munis/Downloads/Quick-food/backend/src/server.js:94:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1975:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 4000
+}
+
+Node.js v22.16.0
+
+
+#
+# Fatal process out of memory: Zone
+#
+----- Native stack trace -----
+
+ 1: 00007FF60EDF711D 
+ 2: 00007FF60ECD181F 
+ 3: 00007FF60FF495C6 
+ 4: 00007FF60F8CD6E1 
+ 5: 00007FF60F39C79B 
+ 6: 00007FF6100D6B10 
+ 7: 00007FF6100D92DB 
+ 8: 00007FF6100D8219 
+ 9: 00007FF6100D7A4A 
+10: 00007FF610095607 
+11: 00007FF6100680B1 
+12: 00007FF6100951EE 
+13: 00007FF61009599E 
+14: 00007FF610095692 
+15: 00007FF610069D0D 
+16: 00007FF610065ABB 
+17: 00007FF61006064A 
+18: 00007FF60F848314 
+19: 00007FF60F801C22 
+20: 00007FF60FAD24F5 
+21: 00007FF60ECD4540 
+22: 00007FF60EE57463 
+23: 00007FF610654C2E 
+24: 00007FFD23E5259D 
+25: 00007FFD2532AF78 RtlUserThreadStart+40

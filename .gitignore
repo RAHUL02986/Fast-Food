@@ -1,0 +1,35 @@
+# dependencies
+node_modules/
+
+# next.js build output
+.next/
+out/
+
+# env files
+.env
+.env.local
+.env.*.local
+
+# logs & scratch files
+*.log
+npm-debug.log*
+last.txt
+tsc_*.txt
+
+# typescript incremental build cache
+*.tsbuildinfo
+
+# user-uploaded content (runtime data, not source)
+backend/uploads/
+
+# os / editor noise
+.DS_Store
+Thumbs.db
+
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+.env
+.next/
+dist/
+build/
