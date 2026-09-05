@@ -23,10 +23,6 @@ function BookRestaurantForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user } = useAuth();
-<<<<<<< HEAD
-
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   const [restaurants, setRestaurants] = useState<any[]>([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState<string>(searchParams.get("restaurant") || "");
   const [selectedDate, setSelectedDate] = useState("");

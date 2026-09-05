@@ -8,10 +8,7 @@ import Table from './models/Table.js';
 import Report from './models/Report.js';
 import Review from './models/Review.js';
 import Order from './models/Order.js';
-<<<<<<< HEAD
 import AdminInvite from './models/AdminInvite.js';
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 const seed = async () => {
   try {
@@ -28,10 +25,7 @@ const seed = async () => {
       Report.deleteMany({}),
       Review.deleteMany({}),
       Order.deleteMany({}),
-<<<<<<< HEAD
       AdminInvite.deleteMany({}),
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     ]);
 
     // Create admin user
@@ -43,7 +37,6 @@ const seed = async () => {
     });
     console.log('✓ Admin created');
 
-<<<<<<< HEAD
     // Create a ready-to-use admin invitation code so super-admin signup works out of the box
     const adminInviteCode = process.env.ADMIN_INVITATION_CODE || 'QF-ADMINSEED1';
     await AdminInvite.create({
@@ -53,8 +46,6 @@ const seed = async () => {
     });
     console.log('✓ Admin invite created (use this code on the signup page)');
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     // Create restaurant owners
     const owner = await User.create({
       name: "John's Restaurant",
@@ -82,11 +73,8 @@ const seed = async () => {
       cuisine: ['Indian', 'Healthy'],
       location: '123 Main Street, Downtown',
       city: 'Mumbai',
-<<<<<<< HEAD
       latitude: 19.076,
       longitude: 72.8777,
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
       status: 'approved',
       verified: true,
       rating: 4.8,
@@ -106,11 +94,8 @@ const seed = async () => {
       cuisine: ['Japanese', 'Asian'],
       location: '8 Marine Drive, Promenade',
       city: 'Mumbai',
-<<<<<<< HEAD
       latitude: 18.944,
       longitude: 72.823,
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
       status: 'approved',
       verified: true,
       rating: 4.9,
@@ -430,10 +415,7 @@ const seed = async () => {
 
     console.log('\n✓ Database seeded successfully!');
     console.log('\nTest Accounts:');
-<<<<<<< HEAD
     console.log(`Super Admin invite code: ${process.env.ADMIN_INVITATION_CODE || 'QF-ADMINSEED1'}`);
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     console.log('Admin: admin@quickfood.com / admin123456');
     console.log('Owner: owner@quickfood.com / owner123456');
     console.log('Owner 2: owner2@quickfood.com / owner123456');

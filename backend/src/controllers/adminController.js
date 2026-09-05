@@ -2,7 +2,6 @@ import User from "../models/User.js";
 import Restaurant from "../models/Restaurant.js";
 import Booking from "../models/Booking.js";
 import Report from "../models/Report.js";
-<<<<<<< HEAD
 import AdminInvite from "../models/AdminInvite.js";
 import { createNotification } from "../utils/notificationService.js";
 
@@ -29,10 +28,6 @@ export const generateAdminInvite = async (req, res, next) => {
   }
 };
 
-=======
-import { createNotification } from "../utils/notificationService.js";
-
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 // ---------- Read-only oversight ----------
 export const getCustomers = async (req, res, next) => {
   try {
@@ -220,7 +215,6 @@ export const updateReportStatus = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-<<<<<<< HEAD
 };
 
 // ADMIN: set a NEW password for a user. Existing passwords are one-way bcrypt
@@ -245,6 +239,3 @@ export const resetUserPassword = async (req, res, next) => {
     next(error);
   }
 };
-=======
-};
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856

@@ -1,18 +1,14 @@
 import Restaurant from "../models/Restaurant.js";
 import { createNotification } from "../utils/notificationService.js";
 
-<<<<<<< HEAD
 /** Escape user input before embedding it in a RegExp. */
 const escapeRegex = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 export const getAllRestaurants = async (req, res, next) => {
   try {
     const { search, cuisine, city, sortBy = "-rating" } = req.query;
 
     const filter = { status: "approved" };
-<<<<<<< HEAD
     const and = [];
 
     // Free-text search matches name, cuisine, city AND street location
@@ -21,21 +17,12 @@ export const getAllRestaurants = async (req, res, next) => {
       and.push({
         $or: [{ name: rx }, { cuisine: rx }, { city: rx }, { location: rx }],
       });
-=======
-
-    if (search) {
-      filter.$or = [
-        { name: new RegExp(search, "i") },
-        { cuisine: new RegExp(search, "i") },
-      ];
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     }
 
     if (cuisine) {
       filter.cuisine = cuisine;
     }
 
-<<<<<<< HEAD
     // "City / Location" filter matches the city field OR the street location
     if (city) {
       const rx = new RegExp(escapeRegex(city), "i");
@@ -44,12 +31,6 @@ export const getAllRestaurants = async (req, res, next) => {
 
     if (and.length) filter.$and = and;
 
-=======
-    if (city) {
-      filter.city = new RegExp(city, "i");
-    }
-
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     const restaurants = await Restaurant.find(filter)
       .populate("owner", "name phone")
       .sort(sortBy)
@@ -113,19 +94,12 @@ export const createRestaurant = async (req, res, next) => {
 
 export const updateRestaurant = async (req, res, next) => {
   try {
-<<<<<<< HEAD
     // Admins may edit any restaurant (e.g. fixing seeded data); owners only their own
     const scope =
       req.user.role === "admin"
         ? { _id: req.params.id }
         : { _id: req.params.id, owner: req.user._id };
     const restaurant = await Restaurant.findOne(scope);
-=======
-    const restaurant = await Restaurant.findOne({
-      _id: req.params.id,
-      owner: req.user._id,
-    });
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant not found" });
@@ -134,7 +108,6 @@ export const updateRestaurant = async (req, res, next) => {
     // Prevent status and verification changes by owner
     const { status, verified, ...updateData } = req.body;
 
-<<<<<<< HEAD
     // Validate coordinates when provided (keeps the 5km geo search accurate)
     if (updateData.latitude === "") delete updateData.latitude;
     if (updateData.longitude === "") delete updateData.longitude;
@@ -153,8 +126,6 @@ export const updateRestaurant = async (req, res, next) => {
       updateData.longitude = lng;
     }
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     Object.assign(restaurant, updateData);
     await restaurant.save();
 
@@ -274,18 +245,12 @@ export const getAllRestaurantsAdmin = async (req, res, next) => {
       ];
     }
 
-<<<<<<< HEAD
     // .lean() skips the User schema's toJSON(), so `password` must be excluded
     // from the populate explicitly — bcrypt hashes must never reach the browser.
     const restaurants = await Restaurant.find(filter)
       .populate("owner", "name email phone")
       .sort({ createdAt: -1 })
       .lean();
-=======
-    const restaurants = await Restaurant.find(filter)
-      .populate("owner", "name email phone")
-      .sort({ createdAt: -1 });
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
     res.json({
       success: true,
@@ -296,7 +261,6 @@ export const getAllRestaurantsAdmin = async (req, res, next) => {
     next(error);
   }
 };
-<<<<<<< HEAD
 
 // ---------- Location-based search (5km radius) ----------
 
@@ -419,5 +383,3 @@ export const getNearbyRestaurants = async (req, res, next) => {
     next(error);
   }
 };
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856

@@ -5,11 +5,7 @@
  * items.menuItem while GET /orders returns raw ObjectIds.
  */
 
-<<<<<<< HEAD
 export type Role = "customer" | "owner" | "admin" | "delivery_partner";
-=======
-export type Role = "customer" | "owner" | "admin";
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 export interface SavedAddress {
   label?: string;
@@ -26,23 +22,17 @@ export interface User {
   email: string;
   role: Role;
   phone?: string;
-<<<<<<< HEAD
   /** bcrypt hash — only populated on admin-only endpoints (never on auth responses) */
   password?: string;
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   avatar?: string;
   address?: string;
   city?: string;
   addresses?: SavedAddress[];
   isActive?: boolean;
-<<<<<<< HEAD
   /** Delivery partner flags (partners are "customer"-role users) */
   isDeliveryPartner?: boolean;
   isAvailable?: boolean;
   currentLocation?: { lat: number; lng: number } | null;
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   createdAt?: string;
   updatedAt?: string;
 }
@@ -73,11 +63,8 @@ export interface Restaurant {
   documents?: { licenseNumber?: string; licenseExpiry?: string; gstin?: string };
   isActive?: boolean;
   suspendedReason?: string;
-<<<<<<< HEAD
   /** Distance from the searched location, in km — only on `/restaurants/nearby` */
   distanceKm?: number;
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   createdAt?: string;
   updatedAt?: string;
 }
@@ -112,7 +99,6 @@ export type OrderStatus =
   | "served"
   | "cancelled";
 
-<<<<<<< HEAD
 /** Granular delivery lifecycle (the 10-step flow) — lives on Order.delivery.status */
 export type DeliveryStatus =
   | "unassigned"
@@ -150,8 +136,6 @@ export interface AssignmentHistoryEntry {
   reason?: string;
 }
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 export interface OrderItem {
   /** Raw ObjectId on list endpoints, populated MenuItem on GET /orders/:id */
   menuItem?: MenuItem | string;
@@ -245,16 +229,11 @@ export interface Order {
   specialInstructions?: string;
   status: OrderStatus;
   statusUpdates?: { status: string; timestamp: string; note?: string }[];
-<<<<<<< HEAD
   delivery?: DeliveryInfo;
   assignmentHistory?: AssignmentHistoryEntry[];
   estimatedDeliveryTime?: string;
   actualDeliveryTime?: string;
   deliveryPartner?: User | string | null;
-=======
-  estimatedDeliveryTime?: string;
-  actualDeliveryTime?: string;
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   rating?: number;
   review?: string;
   cancelReason?: string;
@@ -292,11 +271,7 @@ export interface Review {
 export interface Notification {
   _id: string;
   user?: string | User;
-<<<<<<< HEAD
   type: "order" | "booking" | "restaurant" | "promo" | "system" | "delivery";
-=======
-  type: "order" | "booking" | "restaurant" | "promo" | "system";
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   title?: string;
   message?: string;
   data?: Record<string, unknown>;
@@ -345,7 +320,6 @@ export interface ApiEnvelope<T> {
 
 export type ApiList<T> = ApiEnvelope<T[]>;
 
-<<<<<<< HEAD
 export interface TrackData {
   orderNumber?: string;
   status?: string;
@@ -361,14 +335,11 @@ export interface TrackData {
   } | null;
 }
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 export interface AuthResponse {
   message: string;
   token: string;
   user: User;
 }
-<<<<<<< HEAD
 
 /* ---------- Delivery partner management ---------- */
 
@@ -502,5 +473,3 @@ export interface PartnerRegistrationPayload {
   city: string;
   idDocument?: string;
 }
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856

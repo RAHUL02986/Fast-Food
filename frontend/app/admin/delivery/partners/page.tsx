@@ -16,7 +16,7 @@ export default function AdminDeliveryPartners() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [menu, setMenu] = useState<string | null>(null);
+  const [menu, setMenu] = useState<{ id: string; top: number; left: number } | null>(null);
 
   useEffect(() => {
     if (!authLoading && (!user || user.role !== "admin")) router.push("/login");
@@ -40,6 +40,25 @@ export default function AdminDeliveryPartners() {
     try { await fn(); setMenu(null); load(); }
     catch (e: any) { alert(e.message); setMenu(null); }
   };
+
+  // Close the fixed-position row menu on outside click, scroll or resize
+  useEffect(() => {
+    if (!menu) return;
+    const onDown = (e: MouseEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t?.closest("[data-menu]") || t?.closest("[data-menu-button]")) return;
+      setMenu(null);
+    };
+    const close = () => setMenu(null);
+    document.addEventListener("mousedown", onDown);
+    window.addEventListener("resize", close);
+    window.addEventListener("scroll", close, true);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      window.removeEventListener("resize", close);
+      window.removeEventListener("scroll", close, true);
+    };
+  }, [menu]);
 
   if (authLoading) return <div className="p-8 text-center">Loading...</div>;
 
@@ -96,10 +115,17 @@ export default function AdminDeliveryPartners() {
                       <td className="px-4 py-3"><span className={`px-2 py-1 rounded-full text-xs font-semibold ${PARTNER_STATUS_STYLES[p.status || "pending"]}`}>{(p.status || "pending").replace(/_/g, " ")}</span></td>
                       <td className="px-4 py-3 text-sm">{p.completedDeliveries || 0} done{p.activeDeliveries ? <span className="text-orange-600"> · {p.activeDeliveries} active</span> : null}</td>
                       <td className="px-4 py-3 text-sm font-semibold">{fmt(p.totalEarnings)}</td>
-                      <td className="px-4 py-3 relative">
-                        <button onClick={() => setMenu(menu === p._id ? null : p._id)} className="p-1.5 hover:bg-gray-100 rounded-lg"><MoreVertical size={16} /></button>
-                        {menu === p._id && (
-                          <div className="absolute right-4 top-10 z-20 bg-white border border-gray-200 rounded-lg shadow-lg py-1 w-44">
+                      <td className="px-4 py-3">
+                        <button data-menu-button title="Actions"
+                          onClick={(e) => {
+                            if (menu?.id === p._id) { setMenu(null); return; }
+                            const r = e.currentTarget.getBoundingClientRect();
+                            // Anchor a fixed menu to the button so the table's overflow container can't clip it
+                            setMenu({ id: p._id, top: r.bottom + 4, left: Math.max(8, Math.min(r.right - 176, window.innerWidth - 184)) });
+                          }}
+                          className="p-1.5 hover:bg-gray-100 rounded-lg"><MoreVertical size={16} /></button>
+                        {menu?.id === p._id && (
+                          <div data-menu style={{ top: menu.top, left: menu.left }} className="fixed z-50 bg-white border border-gray-200 rounded-lg shadow-lg py-1 w-44">
                             <Link href={`/admin/delivery/partners/${p._id}`} className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50" onClick={() => setMenu(null)}><Eye size={14} /> View Profile</Link>
                             {p.status === "pending" && (<>
                               <button onClick={() => act(() => deliveryAPI.approvePartner(p._id))} className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-gray-50 w-full text-left text-green-700"><CheckCircle2 size={14} /> Approve</button>

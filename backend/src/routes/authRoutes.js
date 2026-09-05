@@ -27,11 +27,8 @@ const signupSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
   role: z.enum(["customer", "owner", "admin"]).default("customer"),
   phone: z.string().optional(),
-<<<<<<< HEAD
   invitationCode: z.string().optional(),
   isDeliveryPartner: z.boolean().optional(),
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 });
 
 const loginSchema = z.object({

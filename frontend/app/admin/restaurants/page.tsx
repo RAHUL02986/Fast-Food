@@ -5,14 +5,11 @@ import { useRouter } from "next/navigation";
 import { restaurantAPI, adminAPI } from "@/lib/api";
 import { AdminNav } from "@/components/Navs";
 import Link from "next/link";
-<<<<<<< HEAD
 import { Mail } from "lucide-react";
 
 /** Build a `mailto:` link that pre-fills recipient, subject and body. */
 const buildMailto = (to: string, subject: string, body: string) =>
   `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 export default function AdminRestaurants() {
   const { user, loading: authLoading } = useAuth();
@@ -20,7 +17,6 @@ export default function AdminRestaurants() {
   const [restaurants, setRestaurants] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
-<<<<<<< HEAD
   const [editingAddrId, setEditingAddrId] = useState<string | null>(null);
   const [addrForm, setAddrForm] = useState({ location: "", city: "", latitude: "", longitude: "" });
   const [savingAddr, setSavingAddr] = useState(false);
@@ -48,8 +44,6 @@ export default function AdminRestaurants() {
       alert(error.message || "Error resetting password");
     }
   };
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
   useEffect(() => {
     if (!authLoading && (!user || user.role !== "admin")) {
@@ -59,11 +53,7 @@ export default function AdminRestaurants() {
 
   const fetchRestaurants = async (statusFilter?: string) => {
     try {
-<<<<<<< HEAD
       const data = await restaurantAPI.getAllRestaurantsAdmin({ status: statusFilter === "all" ? undefined : statusFilter });
-=======
-      const data = await restaurantAPI.getAllRestaurants({ status: statusFilter === "all" ? undefined : statusFilter });
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
       setRestaurants(data.data || []);
     } catch (error) {
       console.error("Error fetching restaurants:", error);
@@ -124,7 +114,6 @@ export default function AdminRestaurants() {
     }
   };
 
-<<<<<<< HEAD
   const startEditAddress = (restaurant: any) => {
     setEditingAddrId(restaurant._id);
     setAddrForm({
@@ -169,8 +158,6 @@ export default function AdminRestaurants() {
     }
   };
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   if (authLoading || loading) {
     return <div className="p-8 text-center">Loading...</div>;
   }
@@ -182,13 +169,8 @@ export default function AdminRestaurants() {
       <div className="max-w-7xl mx-auto p-8">
         <h1 className="text-3xl font-bold mb-8">Manage Restaurants</h1>
 
-<<<<<<< HEAD
         {/* Status filters */}
         <div className="flex flex-wrap items-center gap-3 mb-8">
-=======
-        {/* Filter Buttons */}
-        <div className="flex gap-3 mb-8">
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
           {["all", "pending", "approved", "rejected"].map((status) => (
             <button
               key={status}
@@ -202,13 +184,10 @@ export default function AdminRestaurants() {
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </button>
           ))}
-<<<<<<< HEAD
           <span className="text-xs text-gray-500">
             Owner passwords are one-way encrypted and can never be viewed — use &ldquo;Reset
             Password&rdquo; on a card to set a new one.
           </span>
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
         </div>
 
         {/* Restaurants List */}
@@ -237,18 +216,13 @@ export default function AdminRestaurants() {
                     </span>
                   </div>
 
-<<<<<<< HEAD
                   <div className="grid grid-cols-5 gap-4 text-sm mb-4">
-=======
-                  <div className="grid grid-cols-4 gap-4 text-sm mb-4">
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
                     <div>
                       <p className="text-gray-600">Owner</p>
                       <p className="font-semibold">{restaurant.owner?.name}</p>
                     </div>
                     <div>
                       <p className="text-gray-600">Email</p>
-<<<<<<< HEAD
                       {restaurant.owner?.email ? (
                         <a
                           href={buildMailto(
@@ -264,9 +238,6 @@ export default function AdminRestaurants() {
                       ) : (
                         <p className="font-semibold text-gray-400">—</p>
                       )}
-=======
-                      <p className="font-semibold">{restaurant.owner?.email}</p>
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
                     </div>
                     <div>
                       <p className="text-gray-600">Cuisines</p>
@@ -276,7 +247,6 @@ export default function AdminRestaurants() {
                       <p className="text-gray-600">Rating</p>
                       <p className="font-semibold">{restaurant.rating || "N/A"} ⭐</p>
                     </div>
-<<<<<<< HEAD
                     <div>
                       <p className="text-gray-600">Login Help</p>
                       {restaurant.owner ? (
@@ -302,11 +272,6 @@ export default function AdminRestaurants() {
                     >
                       {editingAddrId === restaurant._id ? "Close Editor" : "Edit Address"}
                     </button>
-=======
-                  </div>
-
-                  <div className="flex items-center gap-3">
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
                     {restaurant.status === "pending" && (
                       <>
                         <button
@@ -339,7 +304,6 @@ export default function AdminRestaurants() {
                       <span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full font-bold">SUSPENDED</span>
                     )}
                   </div>
-<<<<<<< HEAD
 
                   {editingAddrId === restaurant._id && (
                     <div className="mt-4 bg-orange-50 border border-orange-100 rounded-lg p-4">
@@ -398,8 +362,6 @@ export default function AdminRestaurants() {
                       </div>
                     </div>
                   )}
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
                 </div>
               ))}
             </div>

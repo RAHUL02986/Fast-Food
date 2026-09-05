@@ -17,11 +17,8 @@ export default function OwnerDashboard() {
   const [photos, setPhotos] = useState<string[]>([]);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [savingPhotos, setSavingPhotos] = useState(false);
-<<<<<<< HEAD
   const [addr, setAddr] = useState({ location: "", city: "", latitude: "", longitude: "" });
   const [savingAddr, setSavingAddr] = useState(false);
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
   useEffect(() => {
     if (!authLoading && (!user || user.role !== "owner")) {
@@ -37,15 +34,12 @@ export default function OwnerDashboard() {
         setRestaurant(restaurantData.data);
         setBanner(restaurantData.data?.banner || "");
         setPhotos(restaurantData.data?.photos || []);
-<<<<<<< HEAD
         setAddr({
           location: restaurantData.data?.location || "",
           city: restaurantData.data?.city || "",
           latitude: restaurantData.data?.latitude?.toString() ?? "",
           longitude: restaurantData.data?.longitude?.toString() ?? "",
         });
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
         if (restaurantData.data) {
           const restaurantOrders = await orderAPI.getOrders({ restaurantId: restaurantData.data._id });
@@ -110,7 +104,6 @@ export default function OwnerDashboard() {
     }
   };
 
-<<<<<<< HEAD
   const saveAddress = async () => {
     if ((addr.latitude === "") !== (addr.longitude === "")) {
       alert("Please provide both latitude and longitude together (or leave both empty).");
@@ -143,8 +136,6 @@ export default function OwnerDashboard() {
     }
   };
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   if (authLoading || loading) {
     return <div className="p-8 text-center">Loading...</div>;
   }
@@ -173,7 +164,6 @@ export default function OwnerDashboard() {
               {restaurant.status === "approved" && <p className="text-green-600 mt-2">✓ Live and accepting orders</p>}
             </div>
 
-<<<<<<< HEAD
             {/* Restaurant Address Editor */}
             <div className="bg-white p-8 rounded-lg shadow mb-8">
               <h2 className="text-2xl font-bold mb-2">Restaurant Address</h2>
@@ -259,8 +249,6 @@ export default function OwnerDashboard() {
               </div>
             </div>
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
             {/* Restaurant Photos */}
             <div className="bg-white p-8 rounded-lg shadow mb-8">
               <h2 className="text-2xl font-bold mb-6">Restaurant Photos</h2>

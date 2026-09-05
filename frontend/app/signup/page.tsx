@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
-<<<<<<< HEAD
 import { deliveryAPI, uploadAPI } from "@/lib/api";
 import Link from "next/link";
 import type { VehicleType } from "@/types";
@@ -16,14 +15,10 @@ const VEHICLE_TYPES: { value: VehicleType; label: string }[] = [
   { value: "bicycle", label: "🚲 Bicycle" },
   { value: "other", label: "🚚 Other" },
 ];
-=======
-import Link from "next/link";
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 export default function SignupPage() {
   const router = useRouter();
   const { signup } = useAuth();
-<<<<<<< HEAD
   const [role, setRole] = useState<SignupMode>("customer");
   const [isAdminSignup, setIsAdminSignup] = useState(false);
   const [formData, setFormData] = useState({
@@ -45,15 +40,6 @@ export default function SignupPage() {
   const [avatar, setAvatar] = useState("");
   const [idDocument, setIdDocument] = useState("");
   const [uploading, setUploading] = useState(false);
-=======
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    role: "customer",
-  });
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -62,7 +48,6 @@ export default function SignupPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-<<<<<<< HEAD
   const handlePartnerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setPartnerData((prev) => ({ ...prev, [name]: value }));
@@ -88,8 +73,6 @@ export default function SignupPage() {
     }
   };
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -99,7 +82,6 @@ export default function SignupPage() {
       return;
     }
 
-<<<<<<< HEAD
     // Validate admin signup
     if (isAdminSignup && !formData.invitationCode) {
       setError("Admin invitation code is required");
@@ -139,12 +121,6 @@ export default function SignupPage() {
         isAdminSignup ? formData.invitationCode : undefined,
         { phone: formData.phone || undefined }
       );
-=======
-    setLoading(true);
-
-    try {
-      const user = await signup(formData.name, formData.email, formData.password, formData.role);
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
       if (user.role === "admin") {
         router.push("/admin");
@@ -164,12 +140,7 @@ export default function SignupPage() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8">
-<<<<<<< HEAD
           <img src="/logo.png" alt="Quick Food logo" className="h-16 w-[200px] rounded-xl object-cover mx-auto mb-4" />
-=======
-          <img src="/logo.png" alt="Quick Food logo" className="h-16 w-16 rounded-xl object-cover mx-auto mb-4" />
-          <h1 className="text-3xl font-bold text-center mb-2 text-gray-900">Quick Food</h1>
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
           <p className="text-center text-gray-600 mb-8">Create your account</p>
 
           {error && (
@@ -179,7 +150,6 @@ export default function SignupPage() {
           )}
 
           <form onSubmit={handleSignup} className="space-y-4">
-<<<<<<< HEAD
             <div className="pb-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">I want to sign up as</label>
               <div className="grid grid-cols-3 gap-2">
@@ -229,8 +199,6 @@ export default function SignupPage() {
               </p>
             </div>
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
               <input
@@ -257,7 +225,6 @@ export default function SignupPage() {
               />
             </div>
 
-<<<<<<< HEAD
             {(role === "customer" || role === "delivery_partner") && !isAdminSignup && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -394,22 +361,6 @@ export default function SignupPage() {
               </div>
             )}
 
-=======
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-              >
-                <option value="customer">Customer</option>
-                <option value="owner">Restaurant Owner</option>
-                <option value="admin">Super Admin</option>
-              </select>
-            </div>
-
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
               <input

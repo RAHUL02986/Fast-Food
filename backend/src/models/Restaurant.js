@@ -27,7 +27,6 @@ const restaurantSchema = new mongoose.Schema(
     photos: [String],
     banner: String,
     verified: { type: Boolean, default: false },
-<<<<<<< HEAD
     // GeoJSON Point for geospatial queries (5km radius search)
     loc: {
       type: {
@@ -39,8 +38,6 @@ const restaurantSchema = new mongoose.Schema(
         type: [Number], // [longitude, latitude]
       },
     },
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     documents: {
       licenseNumber: String,
       licenseExpiry: Date,
@@ -56,7 +53,6 @@ const restaurantSchema = new mongoose.Schema(
 // Index for search
 restaurantSchema.index({ name: "text", cuisine: "text", city: "text" });
 restaurantSchema.index({ city: 1, status: 1 });
-<<<<<<< HEAD
 // Geospatial index for location-based search (5km radius)
 restaurantSchema.index({ loc: "2dsphere" });
 
@@ -72,7 +68,5 @@ restaurantSchema.pre("save", function (next) {
   }
   next();
 });
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 export default mongoose.model("Restaurant", restaurantSchema);

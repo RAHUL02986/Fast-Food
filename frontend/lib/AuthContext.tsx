@@ -11,11 +11,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<User>;
   loginWithOtp: (identifier: string, otp: string) => Promise<User>;
   requestOtp: (identifier: string) => Promise<string>;
-<<<<<<< HEAD
   signup: (name: string, email: string, password: string, role: string, invitationCode?: string, extra?: { phone?: string; isDeliveryPartner?: boolean }) => Promise<User>;
-=======
-  signup: (name: string, email: string, password: string, role: string) => Promise<User>;
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   logout: () => void;
   updateProfile: (data: Partial<User>) => Promise<void>;
 }
@@ -65,17 +61,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return data.user;
   };
 
-<<<<<<< HEAD
   const signup = async (name: string, email: string, password: string, role: string, invitationCode?: string, extra?: { phone?: string; isDeliveryPartner?: boolean }): Promise<User> => {
     const signupPayload: any = { name, email, password, role, phone: extra?.phone || undefined, isDeliveryPartner: extra?.isDeliveryPartner || undefined };
     if (invitationCode) {
       signupPayload.invitationCode = invitationCode;
     }
     const data = await authAPI.signup(signupPayload);
-=======
-  const signup = async (name: string, email: string, password: string, role: string): Promise<User> => {
-    const data = await authAPI.signup({ name, email, password, role });
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     localStorage.setItem("token", data.token);
     setUser(data.user);
     return data.user;

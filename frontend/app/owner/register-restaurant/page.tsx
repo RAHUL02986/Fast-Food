@@ -13,11 +13,8 @@ export default function RegisterRestaurant() {
     cuisine: "",
     location: "",
     city: "",
-<<<<<<< HEAD
     latitude: "",
     longitude: "",
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     openingTime: "",
     closingTime: "",
     deliveryTime: "",
@@ -40,17 +37,12 @@ export default function RegisterRestaurant() {
     try {
       const cuisineArray = formData.cuisine.split(",").map((c) => c.trim());
 
-<<<<<<< HEAD
       const payload: any = {
-=======
-      await restaurantAPI.createRestaurant({
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
         ...formData,
         cuisine: cuisineArray,
         deliveryTime: parseInt(formData.deliveryTime),
         minOrderValue: parseFloat(formData.minOrderValue),
         deliveryCharge: parseFloat(formData.deliveryCharge),
-<<<<<<< HEAD
       };
       // Coordinates are optional — only send them when both are filled
       if (formData.latitude !== "" && formData.longitude !== "") {
@@ -62,9 +54,6 @@ export default function RegisterRestaurant() {
       }
 
       await restaurantAPI.createRestaurant(payload);
-=======
-      });
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
       alert("Restaurant registered! Awaiting admin approval.");
       router.push("/owner/dashboard");
@@ -151,7 +140,6 @@ export default function RegisterRestaurant() {
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
-<<<<<<< HEAD
           <p className="text-xs text-gray-500 mt-1">
             Tip: coordinates below power the &ldquo;nearby restaurants&rdquo; (5 km radius) search. In
             Google Maps, right-click your spot and copy the &ldquo;latitude, longitude&rdquo; pair.
@@ -183,8 +171,6 @@ export default function RegisterRestaurant() {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
         </div>
 
         <div className="grid grid-cols-2 gap-4">

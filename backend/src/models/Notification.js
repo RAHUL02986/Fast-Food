@@ -5,11 +5,7 @@ const notificationSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     type: {
       type: String,
-<<<<<<< HEAD
       enum: ["order", "booking", "restaurant", "promo", "system", "delivery"],
-=======
-      enum: ["order", "booking", "restaurant", "promo", "system"],
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
       required: true,
     },
     title: String,

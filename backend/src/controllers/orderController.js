@@ -146,12 +146,9 @@ export const getOrders = async (req, res, next) => {
       // Owners are always scoped to their own restaurant — ignore client-provided ids
       const ownRestaurant = await Restaurant.findOne({ owner: req.user._id });
       filter.restaurant = ownRestaurant?._id;
-<<<<<<< HEAD
     } else if (req.user.role === "delivery_partner") {
       // Delivery partners only ever see orders assigned to them
       filter.deliveryPartner = req.user._id;
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     } else if (req.user.role === "admin" && restaurantId) {
       // Admin oversight is read-only and scoped per-restaurant for this listing
       filter.restaurant = restaurantId;
@@ -207,7 +204,6 @@ export const getOrderById = async (req, res, next) => {
       return res.status(403).json({ message: "You don't have permission to view this order" });
     }
 
-<<<<<<< HEAD
     // Delivery partners can only view orders assigned to them
     if (
       req.user.role === "delivery_partner" &&
@@ -216,8 +212,6 @@ export const getOrderById = async (req, res, next) => {
       return res.status(403).json({ message: "You are not assigned to this order" });
     }
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     const restaurantOwnerId = order.restaurant?.owner?._id
       ? order.restaurant.owner._id.toString()
       : order.restaurant?.owner?.toString();
@@ -498,7 +492,6 @@ export const rateOrder = async (req, res, next) => {
     next(error);
   }
 };
-<<<<<<< HEAD
 
 // ---------- Delivery partner endpoints ----------
 
@@ -706,5 +699,3 @@ export const trackDelivery = async (req, res, next) => {
     next(error);
   }
 };
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856

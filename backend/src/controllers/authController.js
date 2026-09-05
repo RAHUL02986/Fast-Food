@@ -1,15 +1,11 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
-<<<<<<< HEAD
 import AdminInvite from "../models/AdminInvite.js";
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 import { createNotification } from "../utils/notificationService.js";
 
 export const signup = async (req, res, next) => {
   try {
-<<<<<<< HEAD
     const { name, email, password, role = "customer", invitationCode, phone, isDeliveryPartner } = req.body;
 
     if (role === "admin") {
@@ -24,16 +20,12 @@ export const signup = async (req, res, next) => {
         return res.status(400).json({ message: "Invalid invitation code" });
       }
     }
-=======
-    const { name, email, password, role = "customer" } = req.body;
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ message: "Email already registered" });
     }
 
-<<<<<<< HEAD
     const user = new User({ name, email, password, role, phone, isDeliveryPartner: role === "customer" && !!isDeliveryPartner });
     await user.save();
 
@@ -44,11 +36,6 @@ export const signup = async (req, res, next) => {
       );
     }
 
-=======
-    const user = new User({ name, email, password, role });
-    await user.save();
-
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
@@ -114,11 +101,7 @@ export const getProfile = async (req, res, next) => {
 
 export const updateProfile = async (req, res, next) => {
   try {
-<<<<<<< HEAD
     const allowedUpdates = ["name", "phone", "address", "city", "avatar", "addresses", "isDeliveryPartner"];
-=======
-    const allowedUpdates = ["name", "phone", "address", "city", "avatar", "addresses"];
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     const updates = Object.keys(req.body);
     const isValidUpdate = updates.every((update) => allowedUpdates.includes(update));
 

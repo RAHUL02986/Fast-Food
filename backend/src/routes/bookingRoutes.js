@@ -28,7 +28,6 @@ const createBookingSchema = z.object({
   advancePaymentMethod: z.enum(["card", "upi", "wallet"]).default("card"),
 });
 
-<<<<<<< HEAD
 // Booking creation & self-service — any authenticated user can book a table.
 // The booking is tied to the caller (customer: req.user._id); cancel/reschedule
 // are ownership-checked inside the controller, so no role gate is needed here.
@@ -39,15 +38,6 @@ router.get("/available-slots", getAvailableSlots);
 router.get("/:id", authenticate, getBookingById);
 router.patch("/:id/cancel", authenticate, cancelBooking);
 router.patch("/:id/reschedule", authenticate, rescheduleBooking);
-=======
-// Customer routes
-router.post("/", authenticate, authorize(["customer"]), validateRequest(createBookingSchema), createBooking);
-router.get("/", authenticate, getBookings);
-router.get("/available-slots", getAvailableSlots);
-router.get("/:id", authenticate, getBookingById);
-router.patch("/:id/cancel", authenticate, authorize(["customer"]), cancelBooking);
-router.patch("/:id/reschedule", authenticate, authorize(["customer"]), rescheduleBooking);
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 // Owner routes
 router.patch("/:id/status", authenticate, authorize(["owner"]), updateBookingStatus);

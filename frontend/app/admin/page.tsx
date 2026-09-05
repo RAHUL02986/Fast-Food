@@ -2,11 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
-<<<<<<< HEAD
 import { restaurantAPI, analyticsAPI, adminAPI } from "@/lib/api";
-=======
-import { restaurantAPI, analyticsAPI } from "@/lib/api";
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 import { AdminNav } from "@/components/Navs";
 
 export default function AdminDashboard() {
@@ -14,14 +10,10 @@ export default function AdminDashboard() {
   const router = useRouter();
   const [dashboard, setDashboard] = useState<any>(null);
   const [pendingRestaurants, setPendingRestaurants] = useState<any[]>([]);
-<<<<<<< HEAD
   const [inviteCode, setInviteCode] = useState<string>("");
   const [inviteExpiresAt, setInviteExpiresAt] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [inviteLoading, setInviteLoading] = useState(false);
-=======
-  const [loading, setLoading] = useState(true);
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
   useEffect(() => {
     if (!authLoading && (!user || user.role !== "admin")) {
@@ -49,7 +41,6 @@ export default function AdminDashboard() {
     if (!authLoading) fetchData();
   }, [authLoading]);
 
-<<<<<<< HEAD
   const handleGenerateInvite = async () => {
     try {
       setInviteLoading(true);
@@ -73,8 +64,6 @@ export default function AdminDashboard() {
     }
   };
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   const handleApprove = async (restaurantId: string) => {
     try {
       await restaurantAPI.approveRestaurant(restaurantId);
@@ -109,7 +98,6 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto p-8">
         <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
 
-<<<<<<< HEAD
         <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl shadow-lg p-6 mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
@@ -150,8 +138,6 @@ export default function AdminDashboard() {
           )}
         </div>
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
         {/* Stats */}
         <div className="grid grid-cols-4 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow">

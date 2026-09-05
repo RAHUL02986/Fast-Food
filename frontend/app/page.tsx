@@ -10,10 +10,7 @@ import { LogoImage } from '@/components/Logo';
 import DishImage from '@/components/DishImage';
 import ReviewsSlider from '@/components/ReviewsSlider';
 import Footer from '@/components/Footer';
-<<<<<<< HEAD
 import Loading from './loading';
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 const categories = [
   { icon: '🍛', label: 'Indian' },
@@ -31,7 +28,6 @@ export default function Home() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [popularItems, setPopularItems] = useState<PopularItem[]>([]);
   const [loading, setLoading] = useState(true);
-<<<<<<< HEAD
   const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
@@ -41,8 +37,6 @@ export default function Home() {
 
     return () => window.clearTimeout(minimumLoaderTimer);
   }, []);
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,13 +73,10 @@ export default function Home() {
     `${restaurant.name} ${restaurant.cuisine?.join(' ')}`.toLowerCase().includes(query.toLowerCase())
   );
 
-<<<<<<< HEAD
   if (loading || showLoader) {
     return <Loading />;
   }
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   return (
     <div className="min-h-screen bg-gray-50">
       <CustomerNav />

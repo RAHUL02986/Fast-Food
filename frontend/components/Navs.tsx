@@ -1,13 +1,8 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, ChevronRight, LogOut, Menu, X } from "lucide-react";
-=======
-import { useEffect, useState } from "react";
-import { ChevronRight, LogOut, Menu, X } from "lucide-react";
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 import { useAuth } from "@/lib/AuthContext";
 import BrandLogo from "@/components/Logo";
 
@@ -31,7 +26,6 @@ function Avatar({ name }: { name?: string }) {
   );
 }
 
-<<<<<<< HEAD
 /** Avatar + name + email chip (desktop navs) and a mobile (drawer) variant. */
 function AccountChip({ user }: { user?: { name?: string; email?: string; role?: string } | null }) {
   return (
@@ -103,8 +97,6 @@ function SignupDropdown() {
   );
 }
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 const customerLinks = [
   { href: "/", label: "Home" },
   { href: "/restaurants", label: "Discover" },
@@ -235,24 +227,16 @@ export function CustomerNav({ children }: { children?: React.ReactNode }) {
               {user.role === "admin" ? "Admin" : "Restaurant"}
             </Link>
           ) : null}
-<<<<<<< HEAD
           {user?.isDeliveryPartner ? (
             <Link href="/delivery" className={linkCls("/delivery")}>
               Delivery
             </Link>
           ) : null}
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
           {children}
           {user ? (
             <>
               <Link href="/profile" className={`flex items-center gap-2 ${linkCls("/profile")}`}>
-<<<<<<< HEAD
                 <AccountChip user={user} />
-=======
-                <Avatar name={user.name} />
-                {user.name?.split(" ")[0] || "Account"}
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
               </Link>
               <button
                 onClick={() => {
@@ -269,16 +253,7 @@ export function CustomerNav({ children }: { children?: React.ReactNode }) {
               <Link href="/login" className="font-medium text-gray-700 hover:text-orange-600">
                 Login
               </Link>
-<<<<<<< HEAD
               <SignupDropdown />
-=======
-              <Link
-                href="/signup"
-                className="rounded-lg bg-orange-600 px-4 py-1.5 font-semibold text-white transition hover:bg-orange-700"
-              >
-                Sign up
-              </Link>
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
             </>
           )}
         </div>
@@ -304,7 +279,6 @@ export function CustomerNav({ children }: { children?: React.ReactNode }) {
             <Chevron />
           </Link>
         ) : null}
-<<<<<<< HEAD
         {user?.isDeliveryPartner ? (
           <Link href="/delivery" className={drawerLinkClass(isActive("/delivery"))}>
             Delivery Dashboard
@@ -315,15 +289,6 @@ export function CustomerNav({ children }: { children?: React.ReactNode }) {
           <>
             <Link href="/profile" className={drawerLinkClass(isActive("/profile"))}>
               <AccountChip user={user} />
-=======
-        {user ? (
-          <>
-            <Link href="/profile" className={drawerLinkClass(isActive("/profile"))}>
-              <span className="flex items-center gap-2">
-                <Avatar name={user.name} />
-                {user.name?.split(" ")[0] || "Account"}
-              </span>
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
               <Chevron />
             </Link>
             <button
@@ -338,11 +303,7 @@ export function CustomerNav({ children }: { children?: React.ReactNode }) {
             </button>
           </>
         ) : (
-<<<<<<< HEAD
           <div className="space-y-1 px-1 pb-2 pt-2">
-=======
-          <div className="space-y-2 px-1 pb-2 pt-2">
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
             <Link
               href="/login"
               className="block rounded-xl border border-gray-200 px-4 py-3 text-center font-semibold text-gray-700 transition hover:border-orange-300 hover:text-orange-600"
@@ -350,7 +311,6 @@ export function CustomerNav({ children }: { children?: React.ReactNode }) {
               Login
             </Link>
             <Link
-<<<<<<< HEAD
               href="/signup?role=customer"
               onClick={() => setMenuOpen(false)}
               className="block rounded-xl bg-orange-600 px-4 py-3 text-center font-semibold text-white transition hover:bg-orange-700"
@@ -363,12 +323,6 @@ export function CustomerNav({ children }: { children?: React.ReactNode }) {
               className="block rounded-xl border-2 border-orange-600 px-4 py-3 text-center font-semibold text-orange-600 transition hover:bg-orange-50"
             >
               Sign up as Restaurant Owner
-=======
-              href="/signup"
-              className="block rounded-xl bg-orange-600 px-4 py-3 text-center font-semibold text-white transition hover:bg-orange-700"
-            >
-              Sign up
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
             </Link>
           </div>
         )}
@@ -380,20 +334,12 @@ export function CustomerNav({ children }: { children?: React.ReactNode }) {
 const adminLinks = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/restaurants", label: "Restaurants" },
-<<<<<<< HEAD
   { href: "/admin/customers", label: "Customers" },
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/delivery", label: "Delivery" },
   { href: "/admin/bookings", label: "Bookings" },
   { href: "/admin/analytics", label: "Analytics" },
   { href: "/admin/reports", label: "Reports" },
-=======
-  { href: "/admin/orders", label: "Orders" },
-  { href: "/admin/bookings", label: "Bookings" },
-  { href: "/admin/customers", label: "Customers" },
-  { href: "/admin/reports", label: "Reports" },
-  { href: "/admin/analytics", label: "Analytics" },
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 ];
 
 export function AdminNav() {
@@ -428,12 +374,7 @@ export function AdminNav() {
           {user && (
             <>
               <Link href="/profile" className={`flex items-center gap-2 ${linkCls("/profile")}`}>
-<<<<<<< HEAD
                 <AccountChip user={user} />
-=======
-                <Avatar name={user.name} />
-                {user.name?.split(" ")[0] || "Account"}
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
               </Link>
               <button
                 onClick={() => {
@@ -463,14 +404,7 @@ export function AdminNav() {
         {user && (
           <>
             <Link href="/profile" className={drawerLinkClass(isActive("/profile"))}>
-<<<<<<< HEAD
               <AccountChip user={user} />
-=======
-              <span className="flex items-center gap-2">
-                <Avatar name={user.name} />
-                {user.name?.split(" ")[0] || "Account"}
-              </span>
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
               <Chevron />
             </Link>
             <button
@@ -530,12 +464,7 @@ export function OwnerNav() {
           {user && (
             <>
               <Link href="/profile" className={`flex items-center gap-2 ${linkCls("/profile")}`}>
-<<<<<<< HEAD
                 <AccountChip user={user} />
-=======
-                <Avatar name={user.name} />
-                {user.name?.split(" ")[0] || "Account"}
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
               </Link>
               <button
                 onClick={() => {
@@ -565,14 +494,7 @@ export function OwnerNav() {
         {user && (
           <>
             <Link href="/profile" className={drawerLinkClass(isActive("/profile"))}>
-<<<<<<< HEAD
               <AccountChip user={user} />
-=======
-              <span className="flex items-center gap-2">
-                <Avatar name={user.name} />
-                {user.name?.split(" ")[0] || "Account"}
-              </span>
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
               <Chevron />
             </Link>
             <button

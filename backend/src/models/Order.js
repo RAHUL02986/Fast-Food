@@ -57,7 +57,6 @@ const orderSchema = new mongoose.Schema(
     estimatedDeliveryTime: Date,
     actualDeliveryTime: Date,
     deliveryPartner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-<<<<<<< HEAD
     // ---------- Delivery lifecycle ----------
     // Granular delivery stage (the 10-step flow lives here; the top-level
     // `status` keeps its kitchen-facing values so existing UI keeps working).
@@ -106,8 +105,6 @@ const orderSchema = new mongoose.Schema(
         reason: String,
       },
     ],
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     rating: Number,
     review: String,
     cancelReason: String,
@@ -118,11 +115,8 @@ const orderSchema = new mongoose.Schema(
 orderSchema.index({ customer: 1, createdAt: -1 });
 orderSchema.index({ restaurant: 1, status: 1 });
 orderSchema.index({ restaurant: 1, type: 1, createdAt: -1 });
-<<<<<<< HEAD
 // Delivery dashboards filter by partner + delivery stage constantly
 orderSchema.index({ deliveryPartner: 1, "delivery.status": 1 });
 orderSchema.index({ status: 1, type: 1, "delivery.status": 1 });
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 export default mongoose.model("Order", orderSchema);

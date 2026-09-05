@@ -26,11 +26,7 @@ const run = async () => {
   ok("admin login", adminLogin.status === 200 && adminLogin.data.user.role === "admin");
   const ownerLogin = await req("POST", "/auth/login", { email: "owner@quickfood.com", password: "owner123456" });
   ok("owner login (email)", ownerLogin.status === 200);
-<<<<<<< HEAD
   const ownerByPhone = await req("POST", "/auth/login", { email: "9898989898", password: "owner123456" });
-=======
-  const ownerByPhone = await req("POST", "/auth/login", { email: "9999999999", password: "owner123456" });
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   ok("owner login (phone identifier)", ownerByPhone.status === 200);
   const custLogin = await req("POST", "/auth/login", { email: "customer@quickfood.com", password: "customer123456" });
   ok("customer login", custLogin.status === 200);
@@ -177,7 +173,6 @@ const run = async () => {
   const ownerReports = await req("GET", "/admin/reports", null, ownerToken);
   ok("owner denied admin reports", ownerReports.status === 403);
 
-<<<<<<< HEAD
   console.log("— Admin invite & super admin signup —");
   const genInvite = await req("POST", "/admin/invites/generate", null, adminToken);
   ok("admin generates invite code", genInvite.status === 201 && /^[A-Z0-9-]+$/.test(genInvite.data?.data?.code || ""));
@@ -403,8 +398,6 @@ const run = async () => {
   const partnerDelivered = await req("PATCH", `/orders/${tOrderId}/delivered`, null, partnerToken);
   ok("partner marks order delivered", partnerDelivered.status === 200 && partnerDelivered.data.data.status === "delivered");
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   console.log(`\nResult: ${pass} passed, ${fail} failed`);
   process.exit(fail > 0 ? 1 : 0);
 };

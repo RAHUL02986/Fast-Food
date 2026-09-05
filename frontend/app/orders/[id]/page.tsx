@@ -3,10 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { orderAPI } from "@/lib/api";
 import Link from "next/link";
-<<<<<<< HEAD
 import { Bike } from "lucide-react";
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 import { useAuth } from "@/lib/AuthContext";
 import { CustomerNav } from "@/components/Navs";
 
@@ -19,10 +16,7 @@ export default function OrderDetailsPage() {
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState("");
   const [submitting, setSubmitting] = useState(false);
-<<<<<<< HEAD
   const [track, setTrack] = useState<any>(null);
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
   useEffect(() => {
     // Wait for AuthContext to finish verifying the token before redirecting —
@@ -51,7 +45,6 @@ export default function OrderDetailsPage() {
     if (user) fetchOrder();
   }, [params.id, user]);
 
-<<<<<<< HEAD
   // Live tracking — poll every 5s while the order is out for delivery
   useEffect(() => {
     if (!order || order.status !== "out_for_delivery") return;
@@ -74,8 +67,6 @@ export default function OrderDetailsPage() {
     };
   }, [order, user]);
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   const handleRateOrder = async () => {
     if (!order) return;
 
@@ -185,7 +176,6 @@ export default function OrderDetailsPage() {
           )}
         </div>
 
-<<<<<<< HEAD
         {/* Live Tracking — shown while out for delivery */}
         {order.status === "out_for_delivery" && (
           <div className="bg-white p-8 rounded-lg shadow mb-6">
@@ -242,8 +232,6 @@ export default function OrderDetailsPage() {
           </div>
         )}
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
         {/* Order Items */}
         <div className="bg-white p-8 rounded-lg shadow mb-6">
           <h2 className="text-xl font-bold mb-4">Order Items</h2>
@@ -303,11 +291,7 @@ export default function OrderDetailsPage() {
                   <div>
                     <p className="font-semibold capitalize">{update.status.replace("_", " ")}</p>
                     <p className="text-gray-600 text-sm">
-<<<<<<< HEAD
                       {update.timestamp ? new Date(update.timestamp).toLocaleString() : "Pending"}
-=======
-                      {new Date(update.updatedAt).toLocaleString()}
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
                     </p>
                   </div>
                 </div>

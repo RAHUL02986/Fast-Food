@@ -16,7 +16,6 @@ function BrowseRestaurants() {
   const [cuisine, setCuisine] = useState(searchParams.get("cuisine") || "");
   const [minRating, setMinRating] = useState(0);
   const [sortBy, setSortBy] = useState("-rating");
-<<<<<<< HEAD
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [locStatus, setLocStatus] = useState<"idle" | "loading" | "error">("idle");
 
@@ -35,14 +34,11 @@ function BrowseRestaurants() {
       { enableHighAccuracy: true, timeout: 10000 }
     );
   };
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
   useEffect(() => {
     const fetchRestaurants = async () => {
       setLoading(true);
       try {
-<<<<<<< HEAD
         let list: Restaurant[] = [];
         if (coords) {
           // Location-based search: within 5km radius, nearest first
@@ -59,11 +55,6 @@ function BrowseRestaurants() {
           list = data.data || [];
           if (cuisine) list = list.filter((r: any) => r.cuisine?.some((c: string) => c.toLowerCase() === cuisine.toLowerCase()));
         }
-=======
-        const data = await restaurantAPI.getAllRestaurants({ search, city });
-        let list = data.data || [];
-        if (cuisine) list = list.filter((r: any) => r.cuisine?.some((c: string) => c.toLowerCase() === cuisine.toLowerCase()));
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
         if (minRating > 0) list = list.filter((r: any) => (r.rating || 0) >= minRating);
         if (sortBy === "rating") list.sort((a: any, b: any) => (a.rating || 0) - (b.rating || 0));
         else if (sortBy === "-rating") list.sort((a: any, b: any) => (b.rating || 0) - (a.rating || 0));
@@ -77,11 +68,7 @@ function BrowseRestaurants() {
     };
 
     fetchRestaurants();
-<<<<<<< HEAD
   }, [search, city, cuisine, minRating, sortBy, coords]);
-=======
-  }, [search, city, cuisine, minRating, sortBy]);
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -101,11 +88,7 @@ function BrowseRestaurants() {
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-<<<<<<< HEAD
                   placeholder="Search restaurants, cuisines, cities..."
-=======
-                  placeholder="Search restaurants, cuisines..."
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
@@ -118,18 +101,13 @@ function BrowseRestaurants() {
                 <input
                   type="text"
                   value={city}
-<<<<<<< HEAD
                   onChange={(e) => { setCity(e.target.value); setCoords(null); }}
-=======
-                  onChange={(e) => setCity(e.target.value)}
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
                   placeholder="Enter city..."
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
             </div>
 
-<<<<<<< HEAD
             <div className="flex items-end pb-0.5">
               <button
                 type="button"
@@ -142,8 +120,6 @@ function BrowseRestaurants() {
               </button>
             </div>
 
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Cuisine</label>
               <select value={cuisine} onChange={(e) => setCuisine(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
@@ -175,7 +151,6 @@ function BrowseRestaurants() {
         </div>
 
         {/* Restaurants Grid */}
-<<<<<<< HEAD
         {coords && (
           <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6 text-sm">
             📍 Showing restaurants within <strong>5 km</strong> of your location (nearest first).
@@ -187,13 +162,10 @@ function BrowseRestaurants() {
             Could not get your location. Please allow location access or search by city instead.
           </div>
         )}
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
         {loading ? (
           <div className="text-center py-12">Loading restaurants...</div>
         ) : restaurants.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
-<<<<<<< HEAD
             <p>
               No restaurants found{(city || search) && <> for &ldquo;{city || search}&rdquo;</>}.
             </p>
@@ -201,9 +173,6 @@ function BrowseRestaurants() {
               Search matches restaurant name, cuisine, city and street area. Try another city or
               use your location. Note: only approved restaurants appear here.
             </p>
-=======
-            No restaurants found matching your search.
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -213,7 +182,6 @@ function BrowseRestaurants() {
                 href={`/restaurant/${restaurant._id}`}
                 className="bg-white rounded-lg shadow hover:shadow-lg hover:scale-105 transition overflow-hidden"
               >
-<<<<<<< HEAD
                 <div className="h-48 bg-gray-300 relative">
                   {restaurant.banner && <img src={restaurant.banner} alt={restaurant.name} className="w-full h-full object-cover" />}
                   {restaurant.distanceKm != null && (
@@ -221,10 +189,6 @@ function BrowseRestaurants() {
                       📍 {restaurant.distanceKm} km away
                     </span>
                   )}
-=======
-                <div className="h-48 bg-gray-300">
-                  {restaurant.banner && <img src={restaurant.banner} alt={restaurant.name} className="w-full h-full object-cover" />}
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
                 </div>
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-2">{restaurant.name}</h3>

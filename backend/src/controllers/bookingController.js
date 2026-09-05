@@ -111,7 +111,6 @@ export const getBookings = async (req, res, next) => {
     const { status, restaurantId } = req.query;
     const filter = {};
 
-<<<<<<< HEAD
     // "My Bookings" semantics: every caller sees the bookings they created.
     // Owners additionally manage their restaurant's bookings via restaurantId
     // (used by the owner dashboard /owner/bookings).
@@ -119,12 +118,6 @@ export const getBookings = async (req, res, next) => {
       filter.restaurant = restaurantId;
     } else {
       filter.customer = req.user._id;
-=======
-    if (req.user.role === "customer") {
-      filter.customer = req.user._id;
-    } else if (req.user.role === "owner" && restaurantId) {
-      filter.restaurant = restaurantId;
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     }
 
     if (status) {
@@ -159,7 +152,6 @@ export const getBookingById = async (req, res, next) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-<<<<<<< HEAD
     // Check permissions — a caller may view their own bookings (any role) or,
     // if owner, bookings for their restaurant.
     const isOwnBooking =
@@ -171,14 +163,6 @@ export const getBookingById = async (req, res, next) => {
         req.user._id.toString();
 
     if (!isOwnBooking && !isRestaurantOwner) {
-=======
-    // Check permissions
-    if (req.user.role === "customer" && booking.customer._id.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: "You don't have permission to view this booking" });
-    }
-
-    if (req.user.role === "owner" && booking.restaurant.owner.toString() !== req.user._id.toString()) {
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
       return res.status(403).json({ message: "You don't have permission to view this booking" });
     }
 

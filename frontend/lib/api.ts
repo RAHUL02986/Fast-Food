@@ -2,7 +2,6 @@ import type {
   ApiEnvelope,
   ApiList,
   AuthResponse,
-<<<<<<< HEAD
   AvailablePartner,
   Booking,
   DailySummary,
@@ -10,30 +9,19 @@ import type {
   DeliveryOverviewStats,
   DeliveryPartnerProfile,
   DeliverySettingsData,
-=======
-  Booking,
-  DailySummary,
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   FeaturedReview,
   MenuItem,
   Notification,
   Order,
-<<<<<<< HEAD
   PayoutRecord,
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   Report,
   Restaurant,
   Review,
   Table,
   TableSlot,
-<<<<<<< HEAD
   TrackData,
   User,
   WalletData,
-=======
-  User,
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 } from "@/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
@@ -129,22 +117,16 @@ export const authAPI = {
 // Restaurant API
 export const restaurantAPI = {
   getAllRestaurants: (params: ApiParams = {}) => apiCall<ApiList<Restaurant>>(`/restaurants?${buildQuery(params)}`),
-<<<<<<< HEAD
   /** Location-based search — returns approved restaurants within `radius` km sorted nearest-first. */
   getNearbyRestaurants: (params: ApiParams = {}) => apiCall<ApiList<Restaurant>>(`/restaurants/nearby?${buildQuery(params)}`),
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   getRestaurantById: (id: string) => apiCall<ApiEnvelope<Restaurant>>(`/restaurants/${id}`),
   createRestaurant: (payload: ApiPayload) => apiCall<ApiEnvelope<Restaurant>>("/restaurants", { method: "POST", body: JSON.stringify(payload) }),
   updateRestaurant: (id: string, payload: ApiPayload) =>
     apiCall<ApiEnvelope<Restaurant>>(`/restaurants/${id}`, { method: "PUT", body: JSON.stringify(payload) }),
   getOwnerRestaurant: () => apiCall<ApiEnvelope<Restaurant | null>>("/restaurants/owner/my-restaurant"),
-<<<<<<< HEAD
   /** Admin-only: lists every restaurant (any status) with the owner populated incl. email */
   getAllRestaurantsAdmin: (params: ApiParams = {}) =>
     apiCall<ApiList<Restaurant>>("/restaurants/admin/all?" + buildQuery(params)),
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   getPendingRestaurants: () => apiCall<ApiList<Restaurant>>("/restaurants/pending/list"),
   approveRestaurant: (id: string) => apiCall<ApiEnvelope<Restaurant>>(`/restaurants/${id}/approve`, { method: "PATCH" }),
   rejectRestaurant: (id: string, payload: ApiPayload) =>
@@ -183,7 +165,6 @@ export const orderAPI = {
   cancelOrder: (id: string, payload: ApiPayload) =>
     apiCall<ApiEnvelope<Order>>(`/orders/${id}/cancel`, { method: "PATCH", body: JSON.stringify(payload) }),
   rateOrder: (id: string, payload: ApiPayload) => apiCall<ApiEnvelope<Order>>(`/orders/${id}/rate`, { method: "POST", body: JSON.stringify(payload) }),
-<<<<<<< HEAD
   /** Live tracking info for an order — customer/owner/admin (auth required). */
   trackOrder: (id: string) => apiCall<ApiEnvelope<TrackData>>(`/orders/${id}/track`),
   // Delivery partner endpoints
@@ -193,8 +174,6 @@ export const orderAPI = {
   updateOrderLocation: (id: string, payload: ApiPayload) =>
     apiCall<{ message: string; data: { lat: number; lng: number } }>(`/orders/${id}/location`, { method: "PATCH", body: JSON.stringify(payload) }),
   markOrderDelivered: (id: string) => apiCall<ApiEnvelope<Order>>(`/orders/${id}/delivered`, { method: "PATCH" }),
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 };
 
 // Booking API
@@ -234,7 +213,6 @@ export const slotAPI = {
 
 // Admin API (read-only oversight + moderation)
 export const adminAPI = {
-<<<<<<< HEAD
   /** Admin sets a NEW password for a user (existing hashes can never be revealed) */
   resetUserPassword: (userId: string, newPassword: string) =>
     apiCall<{ success: boolean; message: string }>(`/admin/users/${userId}/reset-password`, {
@@ -244,8 +222,6 @@ export const adminAPI = {
 
   generateInvite: () =>
     apiCall<{ message: string; data: { code: string; expiresAt: string } }>("/admin/invites/generate", { method: "POST" }),
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
   getCustomers: (params: ApiParams = {}) => apiCall<ApiList<User>>(`/admin/customers?${buildQuery(params)}`),
   setUserActive: (id: string, payload: ApiPayload) =>
     apiCall<ApiEnvelope<User>>(`/admin/customers/${id}/active`, { method: "PATCH", body: JSON.stringify(payload) }),
@@ -302,7 +278,6 @@ export const notificationAPI = {
   markAllAsRead: () => apiCall<{ message: string }>("/notifications/read-all", { method: "PATCH" }),
   deleteNotification: (id: string) => apiCall<{ message: string }>(`/notifications/${id}`, { method: "DELETE" }),
 };
-<<<<<<< HEAD
 
 // Delivery API — delivery partner self-service + admin delivery management
 export const deliveryAPI = {
@@ -372,5 +347,3 @@ export const deliveryAPI = {
   updateSettings: (payload: ApiPayload) =>
     apiCall<ApiEnvelope<DeliverySettingsData>>("/delivery/admin/settings", { method: "PUT", body: JSON.stringify(payload) }),
 };
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856

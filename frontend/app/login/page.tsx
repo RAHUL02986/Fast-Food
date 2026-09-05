@@ -21,11 +21,8 @@ export default function LoginPage() {
       router.push("/admin");
     } else if (user.role === "owner") {
       router.push("/owner/dashboard");
-<<<<<<< HEAD
     } else if (user.role === "delivery_partner") {
       router.push("/delivery");
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
     } else {
       router.push("/dashboard");
     }
