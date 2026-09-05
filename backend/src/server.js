@@ -16,10 +16,7 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
-<<<<<<< HEAD
 import deliveryRoutes from "./routes/deliveryRoutes.js";
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
@@ -69,10 +66,7 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/uploads", uploadRoutes);
-<<<<<<< HEAD
 app.use("/api/delivery", deliveryRoutes);
-=======
->>>>>>> 1ed4806eca017c48e5ffc19d534dbae1fea1c856
 
 // Serve uploaded images statically
 const uploadsPath = path.resolve(__dirname, "../uploads");
