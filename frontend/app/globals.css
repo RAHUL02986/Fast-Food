@@ -1,19 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Fonts are self-hosted and preloaded via next/font/google in app/layout.tsx
+   (CSS variables --font-dm-sans / --font-space-grotesk). No external @import —
+   it used to block first paint for ~2s waiting on fonts.googleapis.com. */
+
 :root { --ink:#17221e; --muted:#68736e; --cream:#f8f7f2; --paper:#fff; --lime:#d6f23f; --orange:#ff6945; --line:#e4e7df; --green:#155b45; --soft-orange:#fff3ee; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { margin:0; background:linear-gradient(180deg, #f7f4ef 0%, #f5f5f3 100%); color:var(--ink); font-family:'DM Sans', sans-serif; }
+body { margin:0; background:linear-gradient(180deg, #f7f4ef 0%, #f5f5f3 100%); color:var(--ink); font-family:var(--font-dm-sans), 'DM Sans', sans-serif; }
 a { text-decoration:none; }
 button,input { font:inherit; }
 button { cursor:pointer; }
 .shell { max-width:1240px; margin:auto; padding:0 32px; }
 .nav { height:78px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
-.brand { display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-size:22px; font-weight:700; letter-spacing:-.5px; }
+.brand { display:flex; align-items:center; gap:10px; font-family:var(--font-space-grotesk), 'Space Grotesk', sans-serif; font-size:22px; font-weight:700; letter-spacing:-.5px; }
 .brand-mark { width:34px; height:34px; display:grid; place-items:center; background:var(--lime); border-radius:11px; transform:rotate(-8deg); font-weight:700; }
 .brand-mark img { width:100%; height:100%; object-fit:cover; border-radius:inherit; }
 .nav-links { display:flex; align-items:center; gap:28px; font-size:14px; color:var(--muted); }
@@ -29,7 +31,7 @@ button { cursor:pointer; }
 .hero { display:grid; grid-template-columns:1.02fr .98fr; gap:64px; padding:68px 0 74px; align-items:center; }
 .eyebrow { color:var(--orange); font-size:12px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; margin:0 0 18px; }
 .eyebrow.text-orange { margin:0 0 10px; }
-h1,h2,h3 { font-family:'Space Grotesk'; letter-spacing:-1.5px; margin:0; }
+h1,h2,h3 { font-family:var(--font-space-grotesk), 'Space Grotesk', sans-serif; letter-spacing:-1.5px; margin:0; }
 h1 { font-size:clamp(45px,6vw,78px); line-height:.98; max-width:650px; }
 .hero-copy { color:var(--muted); font-size:17px; line-height:1.55; max-width:480px; margin:25px 0 30px; }
 .search { display:flex; align-items:center; gap:12px; background:var(--paper); border:1px solid var(--line); padding:8px 8px 8px 17px; border-radius:14px; max-width:515px; box-shadow:0 12px 30px #17221e08; }
@@ -38,7 +40,7 @@ h1 { font-size:clamp(45px,6vw,78px); line-height:.98; max-width:650px; }
 .hero-art { min-height:410px; position:relative; border-radius:28px; overflow:hidden; background:#e9e3d7; }
 .hero-art img { width:100%; height:100%; min-height:410px; object-fit:cover; display:block; }
 .art-label { position:absolute; left:22px; bottom:21px; background:var(--paper); padding:13px 16px; border-radius:12px; font-size:13px; box-shadow:0 8px 25px #17221e22; }
-.art-label strong { display:block; font-family:'Space Grotesk'; font-size:17px; margin-bottom:2px; }
+.art-label strong { display:block; font-family:var(--font-space-grotesk), 'Space Grotesk', sans-serif; font-size:17px; margin-bottom:2px; }
 .section-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:22px; }
 .section-head h2 { font-size:30px; }
 .section-head p { color:var(--muted); font-size:14px; margin:8px 0 0; }

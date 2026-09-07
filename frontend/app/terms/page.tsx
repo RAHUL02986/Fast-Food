@@ -24,6 +24,8 @@ export default function TermsPage() {
             <img
               src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
               alt="Dining and ordering scene"
+              loading="lazy"
+              decoding="async"
               className="h-68 w-full object-cover"
             />
           </div>

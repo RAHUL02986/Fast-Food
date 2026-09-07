@@ -13,6 +13,8 @@ export default function PrivacyPolicyPage() {
             <img
               src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=900&q=80"
               alt="Privacy and secure food ordering"
+              loading="lazy"
+              decoding="async"
               className="h-72 w-full object-cover"
             />
           </div>

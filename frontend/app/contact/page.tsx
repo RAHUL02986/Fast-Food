@@ -13,6 +13,8 @@ export default function ContactPage() {
             <img
               src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=80"
               alt="Customer support team"
+              loading="lazy"
+              decoding="async"
               className="h-72 w-full object-cover"
             />
           </div>

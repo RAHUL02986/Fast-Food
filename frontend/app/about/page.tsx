@@ -24,6 +24,8 @@ export default function AboutPage() {
             <img
               src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80"
               alt="Restaurant meal table"
+              loading="lazy"
+              decoding="async"
               className="h-64 w-full object-cover"
             />
           </div>

@@ -23,6 +23,8 @@ export default function SupportPage() {
             <img
               src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"
               alt="Restaurant support desk"
+              loading="lazy"
+              decoding="async"
               className="h-68 w-full object-cover"
             />
           </div>

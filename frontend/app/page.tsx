@@ -10,7 +10,6 @@ import { LogoImage } from '@/components/Logo';
 import DishImage from '@/components/DishImage';
 import ReviewsSlider from '@/components/ReviewsSlider';
 import Footer from '@/components/Footer';
-import Loading from './loading';
 
 const categories = [
   { icon: '🍛', label: 'Indian' },
@@ -28,15 +27,6 @@ export default function Home() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [popularItems, setPopularItems] = useState<PopularItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showLoader, setShowLoader] = useState(true);
-
-  useEffect(() => {
-    const minimumLoaderTimer = window.setTimeout(() => {
-      setShowLoader(false);
-    }, 1600);
-
-    return () => window.clearTimeout(minimumLoaderTimer);
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,10 +63,6 @@ export default function Home() {
     `${restaurant.name} ${restaurant.cuisine?.join(' ')}`.toLowerCase().includes(query.toLowerCase())
   );
 
-  if (loading || showLoader) {
-    return <Loading />;
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <CustomerNav />
@@ -110,7 +96,7 @@ export default function Home() {
               </div>
             </div>
             <div className="hidden md:block">
-              <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=90" alt="Delicious food" className="rounded-2xl shadow-2xl w-full h-80 object-cover" />
+              <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=90" alt="Delicious food" loading="lazy" decoding="async" className="rounded-2xl shadow-2xl w-full h-80 object-cover" />
             </div>
           </div>
         </div>
@@ -223,6 +209,8 @@ export default function Home() {
                       <img
                         src={restaurant.banner || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85'}
                         alt={restaurant.name}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                       {(restaurant.rating ?? 0) >= 4.5 && (
