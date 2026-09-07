@@ -276,32 +276,51 @@ export default function OrderDetailsPage() {
           </div>
         </div>
 
-        {/* Status Timeline */}
+        {/* Status Timeline — horizontal stepper */}
         {order.statusUpdates && order.statusUpdates.length > 0 && (
           <div className="bg-white p-8 rounded-lg shadow mb-6">
-            <h2 className="text-xl font-bold mb-4">Order Timeline</h2>
-            <div className="space-y-3">
-              {order.statusUpdates.map((update: any, index: number) => (
-                <div key={index} className="flex gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-8 w-8 rounded-full bg-orange-600 text-white text-sm font-bold">
+            <h2 className="text-xl font-bold mb-6">Order Timeline</h2>
+            <ol className="flex items-start">
+              {order.statusUpdates.map((update: any, index: number) => {
+                const isLast = index === order.statusUpdates.length - 1;
+                return (
+                  <li key={index} className="flex-1 flex flex-col items-center relative">
+                    {/* connector line to the next step */}
+                    {!isLast && (
+                      <span
+                        className={`absolute top-4 left-1/2 w-full h-0.5 ${
+                          update.status === order.status || index < order.statusUpdates.length - 2
+                            ? "bg-orange-500"
+                            : "bg-gray-200"
+                        }`}
+                      />
+                    )}
+                    {/* dot */}
+                    <div
+                      className={`relative z-10 flex items-center justify-center h-8 w-8 rounded-full text-white text-sm font-bold ${
+                        update.status === order.status
+                          ? "bg-orange-600 ring-4 ring-orange-200"
+                          : "bg-orange-500"
+                      }`}
+                    >
                       ✓
                     </div>
-                  </div>
-                  <div>
-                    <p className="font-semibold capitalize">{update.status.replace("_", " ")}</p>
-                    <p className="text-gray-600 text-sm">
+                    {/* labels */}
+                    <p className="mt-2 text-sm font-semibold text-center capitalize whitespace-nowrap">
+                      {update.status.replace(/_/g, " ")}
+                    </p>
+                    <p className="text-xs text-gray-500 text-center whitespace-nowrap">
                       {update.timestamp ? new Date(update.timestamp).toLocaleString() : "Pending"}
                     </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  </li>
+                );
+              })}
+            </ol>
           </div>
         )}
 
-        {/* Rating Section (for delivered orders) */}
-        {order.status === "delivered" && !order.rating && (
+        {/* Rating Section (for delivered orders - customers only) */}
+        {order.status === "delivered" && !order.rating && user?.role === "customer" && (
           <div className="bg-white p-8 rounded-lg shadow">
             <h2 className="text-xl font-bold mb-6">Rate Your Order</h2>
 

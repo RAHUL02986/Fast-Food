@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import Order from "../models/Order.js";
 import User from "../models/User.js";
 import DeliveryPartner from "../models/DeliveryPartner.js";
@@ -10,6 +11,7 @@ import {
   haversineKm,
   computeFeeBreakdown,
 } from "../utils/deliveryFee.js";
+import { settleDeliveryEarning } from "../utils/deliverySettlement.js";
 
 // ---------- shared constants / helpers ----------
 
@@ -566,48 +568,12 @@ export const markOrderDeliveredByPartner = async (req, res, next) => {
     if (historyEntry) historyEntry.outcome = "completed";
     await order.save();
 
-    // ---------- automatic earnings record ----------
-    const settings = await getDeliverySettings();
-    const fee = Number(order.delivery.fee) || Number(order.deliveryCharge) || 0;
-    let partnerEarning = Number(order.delivery.partnerEarning);
-    let adminEarning = Number(order.delivery.adminEarning);
-    if (!fee || isNaN(partnerEarning) || isNaN(adminEarning)) {
-      const breakdown = await computeFeeBreakdown({
-        settings,
-        orderDeliveryCharge: order.deliveryCharge,
-        distanceKm: order.delivery.distanceKm ?? null,
-      });
-      partnerEarning = breakdown.partnerEarning;
-      adminEarning = breakdown.adminEarning;
-    }
-
-    let earning = await DeliveryEarning.findOne({ order: order._id });
-    if (!earning) {
-      earning = await DeliveryEarning.create({
-        partner: req.user._id,
-        order: order._id,
-        orderNumber: order.orderNumber,
-        totalDeliveryCharge: fee,
-        partnerEarning,
-        adminEarning,
-        status: "pending",
-      });
-    }
-
-    // ---------- partner stats + availability ----------
-    const stillBusy = await Order.countDocuments({
-      deliveryPartner: req.user._id,
-      "delivery.status": { $in: ["assigned", "accepted", "reached_restaurant", "picked_up", "out_for_delivery"] },
-      status: { $nin: ["delivered", "cancelled"] },
+    // ---------- automatic earnings record + partner stats (shared, idempotent) ----------
+    const { earning, partnerEarning, adminEarning, stillBusy } = await settleDeliveryEarning({
+      order,
+      partnerUserId: req.user._id,
     });
-    const profile = await DeliveryPartner.findOne({ user: req.user._id });
-    if (profile) {
-      profile.totalDeliveries = (profile.totalDeliveries || 0) + 1;
-      profile.completedDeliveries = (profile.completedDeliveries || 0) + 1;
-      profile.totalEarnings = (profile.totalEarnings || 0) + partnerEarning;
-      profile.status = stillBusy > 0 ? "busy" : "active";
-      await profile.save();
-    }
+
     // Stop tracking automatically when the order is delivered
     req.user.isAvailable = stillBusy === 0;
     req.user.currentLocation = null;
@@ -813,7 +779,10 @@ export const getDeliveryPartnerDetail = async (req, res, next) => {
         .sort({ "delivery.deliveredAt": -1 })
         .limit(25),
       DeliveryEarning.aggregate([
-        { $match: { partner: partnerUserId(profile) } },
+        // NOTE: aggregate() does NO schema casting — the string from
+        // partnerUserId() must be converted to ObjectId to match the stored
+        // `partner` field (which is saved as an ObjectId).
+        { $match: { partner: new mongoose.Types.ObjectId(partnerUserId(profile)) } },
         {
           $group: {
             _id: null,

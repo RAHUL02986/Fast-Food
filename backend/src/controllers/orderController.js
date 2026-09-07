@@ -4,6 +4,7 @@ import Restaurant from "../models/Restaurant.js";
 import Table from "../models/Table.js";
 import Booking from "../models/Booking.js";
 import { createNotification } from "../utils/notificationService.js";
+import { settleDeliveryEarning } from "../utils/deliverySettlement.js";
 
 // Generate unique order number
 const generateOrderNumber = () => {
@@ -299,6 +300,12 @@ export const updateOrderStatus = async (req, res, next) => {
     }
 
     await order.save();
+
+    // Owner marked a delivery order delivered — settle the assigned partner's
+    // earning too (shared, idempotent; no-ops when no partner is assigned).
+    if (status === "delivered" && order.deliveryPartner) {
+      await settleDeliveryEarning({ order, partnerUserId: order.deliveryPartner });
+    }
 
     // Notify customer
     const statusLabel = status === "served" ? "served at your table" : status;
@@ -637,7 +644,11 @@ export const markOrderDelivered = async (req, res, next) => {
     order.statusUpdates.push({ status: "delivered", timestamp: new Date(), note: "Delivered" });
     await order.save();
 
-    req.user.isAvailable = true;
+    // Automatic earnings record + partner lifetime stats (shared, idempotent).
+    const stillBusy = order.deliveryPartner
+      ? (await settleDeliveryEarning({ order, partnerUserId: order.deliveryPartner })).stillBusy
+      : 0;
+    req.user.isAvailable = stillBusy === 0;
     req.user.currentLocation = null;
     await req.user.save();
 

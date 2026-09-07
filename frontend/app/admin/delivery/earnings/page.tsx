@@ -14,23 +14,54 @@ export default function AdminDeliveryEarnings() {
   const [earnings, setEarnings] = useState<DeliveryEarningRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [totals, setTotals] = useState({ total: 0, partner: 0, admin: 0 });
+  const [processingId, setProcessingId] = useState<string | null>(null);
+  const [msg, setMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const loadEarnings = () => {
+    deliveryAPI.getEarnings().then((res) => {
+      setEarnings(res.data?.earnings || []);
+      // Backend returns totals inside `summary`
+      const s = res.data?.summary;
+      setTotals({
+        total: s?.totalDeliveryCharges ?? 0,
+        partner: s?.partnerEarnings ?? 0,
+        admin: s?.adminEarnings ?? 0,
+      });
+    }).catch(console.error).finally(() => setLoading(false));
+  };
 
   useEffect(() => {
     if (!authLoading && (!user || user.role !== "admin")) router.push("/login");
   }, [user, authLoading, router]);
 
   useEffect(() => {
-    if (!authLoading && user?.role === "admin") {
-      deliveryAPI.getEarnings().then((res) => {
-        setEarnings(res.data?.earnings || []);
-        setTotals({
-          total: res.data?.totalDeliveryCharges || 0,
-          partner: res.data?.totalPartnerEarnings || 0,
-          admin: res.data?.totalAdminEarnings || 0,
-        });
-      }).catch(console.error).finally(() => setLoading(false));
-    }
+    if (!authLoading && user?.role === "admin") loadEarnings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authLoading, user]);
+
+  const partnerName = (e: DeliveryEarningRecord) =>
+    typeof e.partner === "object" ? (e.partner as { name?: string })?.name ?? "Partner" : "Partner";
+
+  const handleMarkPaid = async (e: DeliveryEarningRecord) => {
+    const partnerId = typeof e.partner === "object" ? (e.partner as { _id?: string })?._id : e.partner;
+    if (!partnerId) {
+      setMsg({ type: "error", text: "Cannot resolve the partner for this earning." });
+      return;
+    }
+    if (!confirm(`Mark this earning (and all other pending earnings) as paid for ${partnerName(e)}?`)) return;
+
+    setProcessingId(e._id);
+    setMsg(null);
+    try {
+      const res = await deliveryAPI.createPayout({ partnerId, markAll: true });
+      setMsg({ type: "success", text: res.message || "Earnings marked as paid." });
+      loadEarnings();
+    } catch (err) {
+      setMsg({ type: "error", text: (err as Error)?.message || "Failed to mark as paid." });
+    } finally {
+      setProcessingId(null);
+    }
+  };
 
   if (authLoading) return <div className="p-8 text-center">Loading...</div>;
 
@@ -39,6 +70,11 @@ export default function AdminDeliveryEarnings() {
       <AdminNav />
       <div className="max-w-7xl mx-auto p-4 sm:p-8">
         <h1 className="text-2xl font-bold mb-6">Delivery Earnings</h1>
+        {msg && (
+          <div className={`mb-4 px-4 py-3 rounded-lg text-sm font-semibold ${msg.type === "success" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+            {msg.text}
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="bg-white rounded-xl shadow p-5"><p className="text-gray-500 text-sm font-semibold mb-1">Total Delivery Charges</p><p className="text-2xl font-bold text-orange-600">{fmt(totals.total)}</p></div>
           <div className="bg-white rounded-xl shadow p-5"><p className="text-gray-500 text-sm font-semibold mb-1">Partner Earnings</p><p className="text-2xl font-bold text-blue-600">{fmt(totals.partner)}</p></div>
@@ -56,6 +92,7 @@ export default function AdminDeliveryEarnings() {
                 <th className="px-4 py-3 text-sm font-semibold">Partner</th>
                 <th className="px-4 py-3 text-sm font-semibold">Platform</th>
                 <th className="px-4 py-3 text-sm font-semibold">Status</th>
+                <th className="px-4 py-3 text-sm font-semibold">Actions</th>
               </tr></thead>
               <tbody>
                 {earnings.map((e) => (
@@ -66,6 +103,19 @@ export default function AdminDeliveryEarnings() {
                     <td className="px-4 py-3 text-sm text-blue-600 font-semibold">{fmt(e.partnerEarning)}</td>
                     <td className="px-4 py-3 text-sm text-green-600 font-semibold">{fmt(e.adminEarning)}</td>
                     <td className="px-4 py-3 text-sm"><span className={`px-2 py-1 rounded-full text-xs font-semibold ${e.status === "paid" ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800"}`}>{e.status || "pending"}</span></td>
+                    <td className="px-4 py-3 text-sm">
+                      {e.status === "paid" ? (
+                        <span className="text-xs text-gray-400">Settled</span>
+                      ) : (
+                        <button
+                          onClick={() => handleMarkPaid(e)}
+                          disabled={processingId === e._id}
+                          className="px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold transition-colors"
+                        >
+                          {processingId === e._id ? "Processing…" : "Mark as Paid"}
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
