@@ -8,7 +8,10 @@ import type { FeaturedReview } from '@/types';
 
 function Stars({ rating }: { rating: number }) {
   return (
-    <div className="flex items-center gap-1" aria-label={`${rating} out of 5 stars`}>
+    // role="img" is required for aria-label to be a permitted attribute on a
+    // <div> (a generic container has no ARIA role) — this is the standard
+    // pattern for icon-based ratings.
+    <div role="img" aria-label={`${rating} out of 5 stars`} className="flex items-center gap-1">
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}

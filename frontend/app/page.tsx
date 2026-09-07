@@ -67,6 +67,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <CustomerNav />
+      <main>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-orange-500 via-orange-600 to-red-600 text-white">
@@ -262,6 +263,7 @@ export default function Home() {
           )}
         </section>
       </div>
+      </main>
 
     </div>
   );

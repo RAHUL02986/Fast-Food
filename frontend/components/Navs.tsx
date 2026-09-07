@@ -148,11 +148,14 @@ function MobileDrawer({
           open ? "opacity-100" : "opacity-0"
         }`}
       />
-      {/* panel slides in from the right edge */}
+      {/* panel slides in from the right edge. When closed it is aria-hidden AND
+          invisible — visibility:hidden removes the links/buttons from the tab
+          order and accessibility tree (a closed drawer must not expose
+          focusable descendants), while still letting the slide animation play. */}
       <aside
         aria-hidden={!open}
         className={`fixed right-0 top-0 z-50 flex h-full w-72 max-w-[85vw] flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${
-          open ? "translate-x-0" : "translate-x-full"
+          open ? "translate-x-0 visible" : "translate-x-full invisible"
         }`}
       >
         <div className="flex items-center justify-between border-b border-gray-100 px-4 py-3">
