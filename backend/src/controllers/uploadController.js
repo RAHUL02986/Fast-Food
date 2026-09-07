@@ -52,7 +52,15 @@ export const uploadImage = async (req, res, next) => {
     const filePath = path.join(uploadsDir, filename);
     fs.writeFileSync(filePath, buffer);
 
-    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    // Build the public URL for the stored file. Prefer an explicitly configured
+    // PUBLIC_BASE_URL; otherwise use the request's protocol+host (with `trust
+    // proxy` enabled, that reflects X-Forwarded-Proto — https behind Render).
+    // In production, force https as a final safeguard against mixed content.
+    let baseUrl =
+      process.env.PUBLIC_BASE_URL || `${req.protocol}://${req.get("host")}`;
+    if (process.env.NODE_ENV === "production") {
+      baseUrl = baseUrl.replace(/^http:\/\//i, "https://");
+    }
     res.status(201).json({
       message: "Image uploaded successfully",
       url: `${baseUrl}/uploads/${filename}`,

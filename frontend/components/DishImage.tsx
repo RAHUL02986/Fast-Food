@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { dishPlaceholder } from "@/lib/dishImages";
+import { secureImageUrl } from "@/lib/images";
 
 type DishImageProps = {
   name: string;
@@ -19,11 +20,11 @@ type DishImageProps = {
  */
 export default function DishImage({ name, category, image, alt, className = "" }: DishImageProps) {
   const fallback = dishPlaceholder(name, category);
-  const [src, setSrc] = useState(image || fallback);
+  const [src, setSrc] = useState(secureImageUrl(image) || fallback);
 
   // Keep in sync when the item (or its photo) changes, e.g. after editing.
   useEffect(() => {
-    setSrc(image || dishPlaceholder(name, category));
+    setSrc(secureImageUrl(image) || dishPlaceholder(name, category));
   }, [image, name, category]);
 
   return (

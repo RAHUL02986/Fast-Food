@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, MapPin, Search, Star, Clock, Utensils, Bike } from 'lucide-react';
 import { restaurantAPI, menuAPI } from '@/lib/api';
 import type { MenuItem, Restaurant } from '@/types';
+import { secureImageUrl, bannerImageFallback, FALLBACK_BANNER } from '@/lib/images';
 import { CustomerNav } from '@/components/Navs';
 import { LogoImage } from '@/components/Logo';
 import DishImage from '@/components/DishImage';
@@ -207,10 +208,11 @@ export default function Home() {
                   <Link href={`/restaurant/${restaurant._id}`} className="block">
                     <div className="h-48 bg-gray-200 relative">
                       <img
-                        src={restaurant.banner || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85'}
+                        src={secureImageUrl(restaurant.banner) || FALLBACK_BANNER}
                         alt={restaurant.name}
                         loading="lazy"
                         decoding="async"
+                        onError={bannerImageFallback}
                         className="w-full h-full object-cover"
                       />
                       {(restaurant.rating ?? 0) >= 4.5 && (

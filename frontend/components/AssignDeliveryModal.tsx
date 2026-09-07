@@ -4,6 +4,7 @@ import { Bike, MapPin, Phone, Search, User, X } from "lucide-react";
 import { deliveryAPI } from "@/lib/api";
 import type { AvailablePartner, Order } from "@/types";
 import { DELIVERY_STATUS_LABELS, addressLine, fmt } from "@/lib/deliveryUI";
+import { secureImageUrl } from "@/lib/images";
 
 interface Props {
   order: Order;
@@ -113,7 +114,7 @@ export default function AssignDeliveryModal({ order, onClose, onAssigned }: Prop
                   }`}
                 >
                   {p.user?.avatar ? (
-                    <img src={p.user.avatar} alt="" className="h-11 w-11 rounded-full object-cover" />
+                    <img src={secureImageUrl(p.user.avatar)} alt="" className="h-11 w-11 rounded-full object-cover" />
                   ) : (
                     <span className="h-11 w-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
                       {p.user?.name?.charAt(0)?.toUpperCase() || "?"}

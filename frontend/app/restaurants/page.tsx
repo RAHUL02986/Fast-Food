@@ -3,6 +3,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { restaurantAPI } from "@/lib/api";
 import type { Restaurant } from "@/types";
+import { bannerImageFallback, secureImageUrl } from "@/lib/images";
 import { CustomerNav } from "@/components/Navs";
 import Link from "next/link";
 import { Search, MapPin, Star } from "lucide-react";
@@ -183,7 +184,7 @@ function BrowseRestaurants() {
                 className="bg-white rounded-lg shadow hover:shadow-lg hover:scale-105 transition overflow-hidden"
               >
                 <div className="h-48 bg-gray-300 relative">
-                  {restaurant.banner && <img src={restaurant.banner} alt={restaurant.name} loading="lazy" decoding="async" className="w-full h-full object-cover" />}
+                  {restaurant.banner && <img src={secureImageUrl(restaurant.banner)} alt={restaurant.name} loading="lazy" decoding="async" onError={bannerImageFallback} className="w-full h-full object-cover" />}
                   {restaurant.distanceKm != null && (
                     <span className="absolute top-3 left-3 bg-white text-orange-600 text-xs font-bold px-2 py-1 rounded-full shadow">
                       📍 {restaurant.distanceKm} km away

@@ -6,6 +6,7 @@ import { menuAPI, restaurantAPI, uploadAPI } from "@/lib/api";
 import { OwnerNav } from "@/components/Navs";
 import Link from "next/link";
 import DishImage from "@/components/DishImage";
+import { secureImageUrl } from "@/lib/images";
 
 export default function ManageMenu() {
   const { user, loading: authLoading } = useAuth();
@@ -228,7 +229,7 @@ export default function ManageMenu() {
                 <div className="flex items-center gap-4">
                   {formData.image && (
                     <div className="relative">
-                      <img src={formData.image} alt="Item preview" className="w-24 h-24 object-cover rounded-lg border" />
+                      <img src={secureImageUrl(formData.image)} alt="Item preview" className="w-24 h-24 object-cover rounded-lg border" />
                       <button
                         type="button"
                         onClick={() => setFormData((prev) => ({ ...prev, image: "" }))}

@@ -41,6 +41,7 @@ Express REST API for the Quick Food food-delivery & table-booking platform.
 | `MONGODB_URI` | No       | `mongodb://127.0.0.1:27017/quick-food`   | MongoDB connection string      |
 | `JWT_SECRET`  | **Yes**  | —                                        | Signing secret for JWT tokens  |
 | `CLIENT_URL`  | No       | `http://localhost:3000`                  | Allowed CORS origin            |
+| `PUBLIC_BASE_URL` | No    | derived from the request                 | Explicit base URL for uploaded-image links — set it to `https://<your-api-host>` to pin https behind proxies |
 
 ## Folder Guide
 

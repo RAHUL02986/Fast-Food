@@ -28,6 +28,12 @@ import { errorHandler } from "./middleware/errorHandler.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
+// Render (and similar hosts) terminate TLS and proxy to the app over plain
+// HTTP. Trusting the proxy makes req.protocol honor X-Forwarded-Proto, so
+// uploaded-image URLs are stored with https:// — otherwise they are stored as
+// http:// and trigger mixed-content errors on the HTTPS frontend.
+app.set("trust proxy", 1);
+
 // Middleware
 // Security headers. The API serves uploaded images consumed cross-origin by the
 // frontend (localhost:3000 → localhost:4000/uploads), so allow cross-origin resource reads.
@@ -73,7 +79,9 @@ const uploadsPath = path.resolve(__dirname, "../uploads");
 if (!fs.existsSync(uploadsPath)) {
   fs.mkdirSync(uploadsPath, { recursive: true });
 }
-app.use("/uploads", express.static(uploadsPath));
+// Filenames are unique per upload (timestamp + random bytes), so long-lived
+// caching is safe — repeat visits skip re-downloading banner/dish images.
+app.use("/uploads", express.static(uploadsPath, { maxAge: "30d", immutable: true }));
 
 // 404 handler
 app.use((req, res) => {

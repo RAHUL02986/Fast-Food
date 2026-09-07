@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Star, BadgeCheck, Quote } from 'lucide-react';
 import { reviewAPI } from '@/lib/api';
+import { secureImageUrl } from '@/lib/images';
 import type { FeaturedReview } from '@/types';
 
 function Stars({ rating }: { rating: number }) {
@@ -16,6 +17,26 @@ function Stars({ rating }: { rating: number }) {
         />
       ))}
     </div>
+  );
+}
+
+/** Customer avatar — falls back to the initial letter when the photo is missing or fails to load. */
+function CustomerAvatar({ name, src }: { name: string; src?: string }) {
+  const [failed, setFailed] = useState(false);
+  if (!src || failed) {
+    return (
+      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-orange-100 text-orange-600 font-bold">
+        {name.charAt(0).toUpperCase()}
+      </div>
+    );
+  }
+  return (
+    <img
+      src={secureImageUrl(src)}
+      alt={name}
+      className="h-11 w-11 rounded-full object-cover"
+      onError={() => setFailed(true)}
+    />
   );
 }
 
@@ -111,17 +132,7 @@ export default function ReviewsSlider() {
                         </div>
                         <p className="text-lg text-gray-800 leading-relaxed mb-6">“{review.comment}”</p>
                         <div className="flex items-center gap-3">
-                          {review.avatar ? (
-                            <img
-                              src={review.avatar}
-                              alt={review.customerName}
-                              className="h-11 w-11 rounded-full object-cover"
-                            />
-                          ) : (
-                            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-orange-100 text-orange-600 font-bold">
-                              {review.customerName.charAt(0).toUpperCase()}
-                            </div>
-                          )}
+                          <CustomerAvatar name={review.customerName} src={review.avatar} />
                           <div>
                             <div className="flex items-center gap-1.5">
                               <span className="font-bold text-gray-900">{review.customerName}</span>

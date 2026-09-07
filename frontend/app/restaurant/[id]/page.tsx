@@ -7,6 +7,7 @@ import { CustomerNav } from "@/components/Navs";
 import Link from "next/link";
 import { ShoppingCart, Star, MapPin, Utensils, CalendarDays, Plus, Minus, Trash2, ArrowRight, Clock, IndianRupee } from "lucide-react";
 import DishImage from "@/components/DishImage";
+import { bannerImageFallback, secureImageUrl } from "@/lib/images";
 
 export default function RestaurantPage() {
   const params = useParams();
@@ -165,7 +166,7 @@ export default function RestaurantPage() {
         {/* Restaurant Header */}
         <div className="bg-white shadow-md mt-[50px]">
           <div className="h-96 bg-gray-300 relative">
-            {restaurant.banner && <img src={restaurant.banner} alt={restaurant.name} className="w-full h-full object-cover" />}
+            {restaurant.banner && <img src={secureImageUrl(restaurant.banner)} alt={restaurant.name} onError={bannerImageFallback} className="w-full h-full object-cover" />}
           </div>
           <div className="p-8">
             <h1 className="text-4xl font-bold mb-4">{restaurant.name}</h1>
