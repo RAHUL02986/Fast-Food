@@ -50,6 +50,7 @@ Next.js 14 (App Router) web client for the Quick Food platform.
 | `/owner/dashboard-v2`        | Owner    | Alternate dashboard layout                           |
 | `/owner/orders`              | Owner    | **Live order queue** (accept/reject/status, summary) |
 | `/owner/menu`                | Owner    | Menu CRUD + availability toggle                      |
+| `/owner/coupons`             | Owner    | **Coupon management** — assign discounts to entire menu or specific/multiple products |
 | `/owner/tables`              | Owner    | **Tables (QR) & booking slots management**           |
 | `/owner/bookings`            | Owner    | Incoming reservations & status updates               |
 | `/owner/analytics`           | Owner    | Restaurant revenue / top items                       |

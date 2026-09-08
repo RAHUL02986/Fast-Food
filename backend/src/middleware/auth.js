@@ -25,6 +25,32 @@ export const authenticate = async (req, res, next) => {
   }
 };
 
+/**
+ * Optional authentication — sets req.user if a valid token is present,
+ * but does NOT require authentication. Use on routes that behave differently
+ * for authenticated vs unauthenticated users (e.g. owner sees all coupons,
+ * public sees only active ones).
+ */
+export const optionalAuth = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.replace("Bearer ", "");
+    if (!token) {
+      return next(); // No token — continue as unauthenticated
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (user && user.isActive) {
+      req.user = user;
+    }
+    next();
+  } catch {
+    // Invalid token — continue as unauthenticated (don't block the request)
+    next();
+  }
+};
+
 export const authorize =
   (allowedRoles = []) =>
   (req, res, next) => {

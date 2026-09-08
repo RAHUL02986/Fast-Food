@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 import Link from "next/link";
@@ -7,6 +7,12 @@ import Link from "next/link";
 export default function LoginPage() {
   const router = useRouter();
   const { login, requestOtp, loginWithOtp } = useAuth();
+  // `?next=` support — e.g. the checkout page sends guests here with ?next=/checkout
+  const [nextPath, setNextPath] = useState("");
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get("next");
+    if (p && p.startsWith("/") && !p.startsWith("//")) setNextPath(p);
+  }, []);
   const [mode, setMode] = useState<"password" | "otp">("password");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,6 +23,11 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const afterLogin = (user: any) => {
+    if (nextPath) {
+      // Return the user to where they were heading (e.g. checkout) after signing in
+      router.push(nextPath);
+      return;
+    }
     if (user.role === "admin") {
       router.push("/admin");
     } else if (user.role === "owner") {
@@ -206,7 +217,8 @@ export default function LoginPage() {
 
           <div className="login-footer">
             <p>
-              Don’t have an account? <Link href="/signup">Create one</Link>
+              Don’t have an account?{" "}
+              <Link href={nextPath ? `/signup?next=${encodeURIComponent(nextPath)}` : "/signup"}>Create one</Link>
             </p>
             <p className="mt-2">
               <Link href="/" className="text-gray-500 hover:text-orange-600">← Back to home</Link>

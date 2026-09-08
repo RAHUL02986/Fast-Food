@@ -4,6 +4,8 @@ import type {
   AuthResponse,
   AvailablePartner,
   Booking,
+  Coupon,
+  CouponValidation,
   DailySummary,
   DeliveryEarningRecord,
   DeliveryOverviewStats,
@@ -150,6 +152,30 @@ export const menuAPI = {
     }),
   getCategories: (restaurantId: string) =>
     apiCall<ApiEnvelope<string[]>>(`/restaurants/${restaurantId}/menu/restaurant/${restaurantId}/categories`),
+};
+
+// Coupon API (owner manages, customers validate at checkout)
+export const couponAPI = {
+  /** Owner: every coupon for the restaurant (incl. inactive/expired) */
+  getCoupons: (restaurantId: string) =>
+    apiCall<ApiList<Coupon>>(`/restaurants/${restaurantId}/coupons?all=true`),
+  /** Public: live coupons for a restaurant (shown as offers at checkout) */
+  getPublicCoupons: (restaurantId: string) =>
+    apiCall<ApiList<Coupon>>(`/restaurants/${restaurantId}/coupons`),
+  createCoupon: (restaurantId: string, payload: ApiPayload) =>
+    apiCall<ApiEnvelope<Coupon>>(`/restaurants/${restaurantId}/coupons`, { method: "POST", body: JSON.stringify(payload) }),
+  updateCoupon: (restaurantId: string, id: string, payload: ApiPayload) =>
+    apiCall<ApiEnvelope<Coupon>>(`/restaurants/${restaurantId}/coupons/${id}`, { method: "PUT", body: JSON.stringify(payload) }),
+  deleteCoupon: (restaurantId: string, id: string) =>
+    apiCall<{ message: string }>(`/restaurants/${restaurantId}/coupons/${id}`, { method: "DELETE" }),
+  toggleCoupon: (restaurantId: string, id: string, payload: ApiPayload) =>
+    apiCall<ApiEnvelope<Coupon>>(`/restaurants/${restaurantId}/coupons/${id}/status`, { method: "PATCH", body: JSON.stringify(payload) }),
+  /** Checkout preview: server prices the cart and computes the discount */
+  validateCoupon: (restaurantId: string, code: string, items: { menuItem: string; quantity: number }[]) =>
+    apiCall<ApiEnvelope<CouponValidation>>(`/restaurants/${restaurantId}/coupons/validate`, {
+      method: "POST",
+      body: JSON.stringify({ code, items }),
+    }),
 };
 
 // Order API

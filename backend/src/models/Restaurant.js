@@ -22,6 +22,7 @@ const restaurantSchema = new mongoose.Schema(
     closingTime: String, // HH:MM format
     isOpen: { type: Boolean, default: true },
     deliveryTime: Number, // in minutes
+    pickupTime: Number, // in minutes (time to prepare order for pickup)
     minOrderValue: Number,
     deliveryCharge: Number,
     photos: [String],

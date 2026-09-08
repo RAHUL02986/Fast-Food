@@ -3,6 +3,8 @@ import MenuItem from "../models/MenuItem.js";
 import Restaurant from "../models/Restaurant.js";
 import Table from "../models/Table.js";
 import Booking from "../models/Booking.js";
+import Coupon from "../models/Coupon.js";
+import { evaluateCouponForCart } from "./couponController.js";
 import { createNotification } from "../utils/notificationService.js";
 import { settleDeliveryEarning } from "../utils/deliverySettlement.js";
 
@@ -22,9 +24,10 @@ export const createOrder = async (req, res, next) => {
       type = "delivery",
       table: tableId,
       booking: bookingId,
+      couponCode,
     } = req.body;
 
-    if (!["delivery", "dine-in"].includes(type)) {
+    if (!["delivery", "dine-in", "pickup"].includes(type)) {
       return res.status(400).json({ message: "Invalid order type" });
     }
 
@@ -63,18 +66,50 @@ export const createOrder = async (req, res, next) => {
     }
 
     let deliveryCharge = 0;
-    let tax = Math.round(subtotal * 0.05); // 5% tax
-    let total = 0;
     let table = null;
     let booking = null;
+
+    // ---------- Coupon (optional) ----------
+    // The owner-created coupon is re-validated here against the server-priced cart:
+    // active, within validity window, usage limit, min order and product assignment.
+    let couponDiscount = 0;
+    let appliedCoupon = null;
+    let appliedCouponDoc = null;
+    if (couponCode) {
+      appliedCouponDoc = await Coupon.findOne({
+        restaurant: restaurantDoc._id,
+        code: String(couponCode).trim().toUpperCase(),
+      });
+      if (!appliedCouponDoc) {
+        return res.status(404).json({ message: "Invalid coupon code" });
+      }
+
+      const couponResult = evaluateCouponForCart(appliedCouponDoc, validatedItems);
+      if (!couponResult.ok) {
+        return res.status(400).json({ message: couponResult.reason });
+      }
+
+      couponDiscount = couponResult.discountAmount;
+      appliedCoupon = {
+        code: appliedCouponDoc.code,
+        discountType: appliedCouponDoc.discountType,
+        discountValue: appliedCouponDoc.discountValue,
+        discountAmount: couponDiscount,
+      };
+    }
+
+    // Tax is charged on the amount actually paid (subtotal minus coupon discount)
+    const taxableSubtotal = subtotal - couponDiscount;
+    let tax = Math.round(taxableSubtotal * 0.05); // 5% tax
+    let total = 0;
 
     if (type === "delivery") {
       if (!deliveryAddress) {
         return res.status(400).json({ message: "Delivery address is required" });
       }
       deliveryCharge = restaurantDoc.deliveryCharge || 40;
-      total = subtotal + deliveryCharge + tax;
-    } else {
+      total = taxableSubtotal + deliveryCharge + tax;
+    } else if (type === "dine-in") {
       // Dine-in: verify the table belongs to this restaurant
       if (!tableId) {
         return res.status(400).json({ message: "Table is required for a dine-in order" });
@@ -90,7 +125,10 @@ export const createOrder = async (req, res, next) => {
         }
       }
       // Dine-in orders are paid at the table — no delivery charge
-      total = subtotal + tax;
+      total = taxableSubtotal + tax;
+    } else {
+      // Pickup: customer picks up from restaurant — no delivery charge, no table needed
+      total = taxableSubtotal + tax;
     }
 
     const order = new Order({
@@ -102,6 +140,7 @@ export const createOrder = async (req, res, next) => {
       deliveryCharge,
       tax,
       total,
+      coupon: appliedCoupon || undefined,
       deliveryAddress: type === "delivery" ? deliveryAddress : undefined,
       specialInstructions,
       paymentMethod,
@@ -110,19 +149,34 @@ export const createOrder = async (req, res, next) => {
       booking: booking?._id,
       estimatedDeliveryTime:
         type === "delivery" ? new Date(Date.now() + restaurantDoc.deliveryTime * 60000) : undefined,
+      estimatedPickupTime:
+        type === "pickup" ? new Date(Date.now() + (restaurantDoc.pickupTime || 20) * 60000) : undefined,
     });
 
     await order.save();
+
+    // Count the redemption (best-effort — never fail the order for this)
+    if (appliedCouponDoc) {
+      try {
+        await Coupon.updateOne({ _id: appliedCouponDoc._id }, { $inc: { usedCount: 1 } });
+      } catch (couponCountError) {
+        console.error("Failed to increment coupon usage:", couponCountError.message);
+      }
+    }
+
     await order.populate("restaurant", "name");
     if (order.table) await order.populate("table", "name");
 
     // Notify restaurant
+    const orderTypeLabel = type === "pickup" ? "pickup" : type === "dine-in" ? "dine-in" : "delivery";
     await createNotification(restaurantDoc.owner, {
       type: "order",
-      title: "New Order Received",
+      title: `New ${orderTypeLabel} Order Received`,
       message:
         type === "dine-in"
           ? `New dine-in order ${order.orderNumber}${table ? ` at table ${table.name}` : ""}`
+          : type === "pickup"
+          ? `New pickup order ${order.orderNumber} - customer will pick up`
           : `New delivery order ${order.orderNumber} from customer`,
       relatedId: order._id,
     });

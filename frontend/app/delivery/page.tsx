@@ -1,12 +1,115 @@
-"use client";
+﻿"use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
 import { deliveryAPI } from "@/lib/api";
 import { CustomerNav } from "@/components/Navs";
 import Link from "next/link";
-import { Bike, IndianRupee, Package, Clock, CheckCircle, TrendingUp, ToggleLeft, ToggleRight, Wallet, MapPin, ChevronRight, Star } from "lucide-react";
-import type { Order } from "@/types";
+import { Bike, IndianRupee, Package, Clock, CheckCircle, TrendingUp, ToggleLeft, ToggleRight, Wallet, MapPin, ChevronRight, Star, Phone, User, Navigation } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import type { Order, User as UserType } from "@/types";
+
+// Helper to check if customer is a populated User object
+function isPopulatedUser(customer: any): customer is UserType {
+  return customer && typeof customer === "object" && "name" in customer;
+}
+
+// Delivery details component with client info and action buttons
+function DeliveryOrderCard({ order, onAction }: { order: Order; onAction?: () => void }) {
+  const [marking, setMarking] = useState(false);
+  const [error, setError] = useState("");
+
+  const markDelivered = async () => {
+    if (!confirm("Mark this order as delivered?")) return;
+    setMarking(true);
+    setError("");
+    try {
+      await deliveryAPI.markDelivered(order._id);
+      onAction?.();
+    } catch (err: any) {
+      setError(err.message || "Failed to mark as delivered");
+    } finally {
+      setMarking(false);
+    }
+  };
+
+  const canDeliver = order.delivery?.status === "out_for_delivery" || order.status === "out_for_delivery";
+  const customer = isPopulatedUser(order.customer) ? (order.customer as UserType) : null;
+
+  // Build delivery address string
+  const addressParts = [
+    order.deliveryAddress?.street,
+    order.deliveryAddress?.city,
+    order.deliveryAddress?.zip ? `${order.deliveryAddress.zip}` : null
+  ].filter(Boolean);
+  const addressLine1 = addressParts.length > 0 ? addressParts.slice(0, 2).join(", ") : null;
+  const addressLine2 = addressParts.length > 2 ? addressParts[2] : null;
+
+  return (
+    <div className="p-3 sm:p-4 hover:bg-gray-50 overflow-hidden w-full">
+      {/* Header: Order number and status */}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2">
+        <p className="font-semibold text-orange-600 text-sm sm:text-base break-all">#{order.orderNumber}</p>
+        <span className="px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800 whitespace-nowrap">{order.delivery?.status?.replace(/_/g, " ") || order.status}</span>
+      </div>
+
+      {/* Restaurant and delivery route */}
+      <p className="text-xs sm:text-sm text-gray-600 break-words mb-2">
+        <span className="font-medium">{order.restaurant?.name || "Restaurant"}</span>
+        <span className="mx-1">→</span>
+        <span>{order.deliveryAddress?.city || "Delivery"}</span>
+      </p>
+
+      {/* Client Details Card */}
+      <div className="p-2 sm:p-3 bg-gray-50 rounded-lg mb-2 overflow-hidden">
+        <p className="text-xs font-semibold text-gray-700 mb-1.5">Client Details</p>
+        <div className="space-y-1.5">
+          {/* Customer name */}
+          <div className="flex items-start gap-2 text-xs sm:text-sm">
+            <User size={14} className="text-orange-500 shrink-0 mt-0.5" />
+            <span className="text-gray-600 break-words break-all">{customer?.name || "N/A"}</span>
+          </div>
+          {/* Customer phone */}
+          {customer?.phone && (
+            <div className="flex items-center gap-2 text-xs sm:text-sm">
+              <Phone size={14} className="text-orange-500 shrink-0" />
+              <a href={`tel:${customer.phone}`} className="text-orange-600 hover:underline break-all">{customer.phone}</a>
+            </div>
+          )}
+          {/* Delivery address */}
+          {addressLine1 && (
+            <div className="flex items-start gap-2">
+              <Navigation size={14} className="text-orange-500 shrink-0 mt-0.5" />
+              <div className="text-xs text-gray-500 break-words min-w-0 flex-1">
+                <p>{addressLine1}</p>
+                {addressLine2 && <p>{addressLine2}</p>}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Earning and Action Button */}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="font-bold text-green-600 text-sm sm:text-base">₹{order.delivery?.partnerEarning?.toLocaleString() || 0}</p>
+        {canDeliver && (
+          <button
+            onClick={markDelivered}
+            disabled={marking}
+            className="px-3 py-1.5 bg-green-600 text-white text-xs font-semibold rounded-lg hover:bg-green-700 disabled:bg-gray-400 flex items-center gap-1 whitespace-nowrap shrink-0"
+          >
+            <CheckCircle size={14} />
+            <span className="hidden sm:inline">{marking ? "Marking..." : "Mark Delivered"}</span>
+            <span className="sm:hidden">{marking ? "..." : "Deliver"}</span>
+          </button>
+        )}
+      </div>
+
+      <p className="text-xs text-gray-400 mt-2">{new Date(order.createdAt ?? "").toLocaleString()}</p>
+      {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
+    </div>
+  );
+}
 
 interface WalletData {
   availableBalance?: number;
@@ -113,22 +216,7 @@ export default function DeliveryDashboard() {
               {activeDeliveries.length === 0 ? (
                 <div className="p-8 text-center"><Bike size={32} className="mx-auto text-gray-300 mb-2" /><p className="text-gray-500">No active deliveries. Go online to receive orders!</p></div>
               ) : activeDeliveries.slice(0, 3).map((order) => (
-                <div key={order._id} className="p-4 hover:bg-gray-50">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="font-semibold text-orange-600">#{order.orderNumber}</p>
-                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">{order.delivery?.status?.replace(/_/g, " ") || "Active"}</span>
-                      </div>
-                      <p className="text-sm text-gray-600 truncate">{order.restaurant?.name} | {order.deliveryAddress?.city || "Delivery"}</p>
-                      <p className="text-xs text-gray-400 mt-1">{fmtDate(order.createdAt ?? "")}</p>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="font-bold">\u20B9{order.delivery?.partnerEarning?.toLocaleString()}</p>
-                      <Link href={`/delivery?order=${order._id}`} className="text-xs text-orange-600 hover:underline">Details</Link>
-                    </div>
-                  </div>
-                </div>
+                <DeliveryOrderCard key={order._id} order={order} onAction={() => window.location.reload()} />
               ))}
             </div>
           </div>
@@ -173,3 +261,5 @@ export default function DeliveryDashboard() {
     </div>
   );
 }
+
+

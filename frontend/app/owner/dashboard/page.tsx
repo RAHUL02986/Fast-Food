@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { restaurantAPI, orderAPI, analyticsAPI } from "@/lib/api";
 import { OwnerNav } from "@/components/Navs";
 import Link from "next/link";
-import { UtensilsCrossed, ShoppingBag, Calendar, TrendingUp, IndianRupee, Clock, CheckCircle, Plus, ChevronRight, Star, Package } from "lucide-react";
+import { UtensilsCrossed, ShoppingBag, Calendar, TrendingUp, IndianRupee, Clock, CheckCircle, Plus, ChevronRight, Star, Package, Ticket } from "lucide-react";
 import type { Restaurant, Order, MenuItem } from "@/types";
 
 interface OwnerAnalytics {
@@ -105,6 +105,7 @@ export default function OwnerDashboard() {
   const quickActions = [
     { l: "View Orders", h: "/owner/orders", i: ShoppingBag, c: "bg-blue-600" },
     { l: "Manage Menu", h: "/owner/menu", i: UtensilsCrossed, c: "bg-orange-600" },
+    { l: "Coupons", h: "/owner/coupons", i: Ticket, c: "bg-rose-600" },
     { l: "Tables", h: "/owner/tables", i: Calendar, c: "bg-green-600" },
     { l: "Bookings", h: "/owner/bookings", i: Calendar, c: "bg-purple-600" },
     { l: "Analytics", h: "/owner/analytics", i: TrendingUp, c: "bg-cyan-600" },

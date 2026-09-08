@@ -1,18 +1,17 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { restaurantAPI, menuAPI } from "@/lib/api";
-import { useAuth } from "@/lib/AuthContext";
+import { restaurantAPI, menuAPI, couponAPI } from "@/lib/api";
 import { CustomerNav } from "@/components/Navs";
 import Link from "next/link";
-import { ShoppingCart, Star, MapPin, Utensils, CalendarDays, Plus, Minus, Trash2, ArrowRight, Clock, IndianRupee } from "lucide-react";
+import { ShoppingCart, Star, MapPin, Utensils, CalendarDays, Plus, Minus, Trash2, ArrowRight, Clock, IndianRupee, Copy, Tag, Sparkles } from "lucide-react";
 import DishImage from "@/components/DishImage";
 import { bannerImageFallback, secureImageUrl } from "@/lib/images";
+import type { Coupon } from "@/types";
 
 export default function RestaurantPage() {
   const params = useParams();
   const router = useRouter();
-  const { user } = useAuth();
   const [restaurant, setRestaurant] = useState<any>(null);
   const [menuItems, setMenuItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -21,6 +20,57 @@ export default function RestaurantPage() {
   const [showCart, setShowCart] = useState(false);
   const [activeCategory, setActiveCategory] = useState("");
   const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  // ---- Coupon offers for this restaurant ----
+  const [availableCoupons, setAvailableCoupons] = useState<Coupon[]>([]);
+  const [showCopyToast, setShowCopyToast] = useState(false);
+  const [copiedCode, setCopiedCode] = useState("");
+
+  /** Map of menu-item id → coupons that apply to that specific product */
+  const couponsByItem = useMemo(() => {
+    const map: Record<string, Coupon[]> = {};
+    for (const coupon of availableCoupons) {
+      if (coupon.applyToAllItems) {
+        // whole-menu coupons aren't shown as per-item badges
+        continue;
+      }
+      for (const item of coupon.applicableItems || []) {
+        const id = typeof item === "string" ? item : item._id;
+        if (!id) continue;
+        if (!map[id]) map[id] = [];
+        map[id].push(coupon);
+      }
+    }
+    return map;
+  }, [availableCoupons]);
+
+  /** Best (highest-value) coupon badge to show on a product card */
+  const bestCouponForItem = (itemId: string): Coupon | null => {
+    const list = couponsByItem[itemId];
+    if (!list || list.length === 0) return null;
+    return list.reduce((best, c) => {
+      const score = c.discountType === "percentage" ? c.discountValue : c.discountValue / 10;
+      const bestScore = best.discountType === "percentage" ? best.discountValue : best.discountValue / 10;
+      return score > bestScore ? c : best;
+    });
+  };
+
+  const copyCouponCode = async (code: string) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopiedCode(code);
+      setShowCopyToast(true);
+      setTimeout(() => setShowCopyToast(false), 2000);
+    } catch {
+      // fallback for non-secure contexts
+      setCopiedCode(code);
+      setShowCopyToast(true);
+      setTimeout(() => setShowCopyToast(false), 2000);
+    }
+  };
+
+  const formatCouponDiscount = (coupon: Coupon) =>
+    coupon.discountType === "percentage" ? `${coupon.discountValue}% OFF` : `₹${coupon.discountValue} OFF`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,13 +88,16 @@ export default function RestaurantPage() {
       setError(null);
 
       try {
-        const [restData, menuData] = await Promise.all([
+        const [restData, menuData, couponData] = await Promise.all([
           restaurantAPI.getRestaurantById(restaurantId),
           menuAPI.getMenuItems(restaurantId),
+          // Public active coupons for this restaurant (best-effort)
+          couponAPI.getPublicCoupons(restaurantId).catch(() => ({ data: [] })),
         ]);
 
         setRestaurant(restData.data);
         setMenuItems(menuData.data || []);
+        setAvailableCoupons((couponData as any).data || []);
         if (menuData.data && menuData.data.length > 0) {
           setActiveCategory(menuData.data[0].category);
         }
@@ -91,11 +144,8 @@ export default function RestaurantPage() {
   const getTotal = () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleCheckout = () => {
-    if (!user) {
-      alert("Please login to place an order");
-      router.push("/login");
-      return;
-    }
+    // Guests are allowed to reach checkout — the checkout page asks them to
+    // log in / sign up as the first step (Swiggy-style guest checkout flow).
     if (cart.length === 0) {
       alert("Your cart is empty");
       return;
@@ -214,6 +264,43 @@ export default function RestaurantPage() {
           </div>
         </div>
 
+        {/* ---- Available Coupon Offers ---- */}
+        {availableCoupons.length > 0 && (
+          <div className="bg-gradient-to-r from-orange-50 to-yellow-50 border-y border-orange-200 px-8 py-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Sparkles size={20} className="text-orange-600" />
+              <h2 className="text-lg font-bold text-orange-700">Available Offers</h2>
+              <span className="text-sm text-gray-500 ml-1">— tap to copy the code</span>
+            </div>
+            <div className="flex gap-3 overflow-x-auto pb-1">
+              {availableCoupons.map((coupon) => (
+                <button
+                  key={coupon._id}
+                  onClick={() => copyCouponCode(coupon.code)}
+                  className="shrink-0 bg-white border-2 border-dashed border-orange-400 rounded-lg px-4 py-3 hover:bg-orange-50 hover:border-orange-600 transition group text-left"
+                  title={`Copy code ${coupon.code}`}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <Tag size={14} className="text-orange-600" />
+                    <span className="font-mono font-bold text-orange-700 text-base tracking-wide">{coupon.code}</span>
+                    <Copy size={14} className="text-gray-400 group-hover:text-orange-600 transition" />
+                  </div>
+                  <p className="font-bold text-orange-600 text-sm">{formatCouponDiscount(coupon)}</p>
+                  {coupon.description && (
+                    <p className="text-gray-600 text-xs mt-0.5 max-w-[220px] truncate">{coupon.description}</p>
+                  )}
+                  <p className="text-gray-500 text-xs mt-1">
+                    {coupon.applyToAllItems
+                      ? "Entire menu"
+                      : `On ${(coupon.applicableItems || []).length} selected item${(coupon.applicableItems || []).length !== 1 ? "s" : ""}`}
+                    {coupon.minOrderAmount ? ` · Min ₹${coupon.minOrderAmount}` : ""}
+                  </p>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-3 gap-8 p-8">
           {/* Menu */}
           <div className="col-span-2 space-y-8">
@@ -225,8 +312,18 @@ export default function RestaurantPage() {
                     .filter((item) => item.category === category)
                     .map((item) => (
                       <div key={item._id} className="bg-white p-4 rounded-lg shadow hover:shadow-md">
-                        <div className="h-32 bg-gray-100 rounded mb-3 overflow-hidden">
+                        <div className="h-32 bg-gray-100 rounded mb-3 overflow-hidden relative">
                           <DishImage name={item.name} category={item.category} image={item.image} alt={item.name} className="w-full h-full object-cover rounded" />
+                          {(() => {
+                            const c = bestCouponForItem(item._id);
+                            if (!c) return null;
+                            return (
+                              <span className="absolute top-2 left-2 bg-orange-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow flex items-center gap-1">
+                                <Tag size={10} />
+                                {formatCouponDiscount(c)}
+                              </span>
+                            );
+                          })()}
                         </div>
                         <h3 className="font-bold mb-1">{item.name}</h3>
                         <p className="text-gray-600 text-sm mb-2 line-clamp-2">{item.description}</p>
@@ -345,6 +442,13 @@ export default function RestaurantPage() {
               </span>
               <span className="bg-white text-orange-600 px-3 py-1 rounded-full text-sm">View Cart →</span>
             </button>
+          </div>
+        )}
+
+        {/* Coupon code copied toast */}
+        {showCopyToast && (
+          <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-xl text-sm font-medium animate-pulse">
+            Code <span className="font-mono font-bold text-orange-400">"{copiedCode}"</span> copied! Apply it at checkout.
           </div>
         )}
       </div>

@@ -431,6 +431,7 @@ const ownerLinks = [
   { href: "/owner/dashboard", label: "Dashboard" },
   { href: "/owner/orders", label: "Orders" },
   { href: "/owner/menu", label: "Menu" },
+  { href: "/owner/coupons", label: "Coupons" },
   { href: "/owner/tables", label: "Tables & Slots" },
   { href: "/owner/bookings", label: "Bookings" },
   { href: "/owner/analytics", label: "Analytics" },

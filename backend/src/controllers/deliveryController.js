@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+﻿import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import Order from "../models/Order.js";
 import User from "../models/User.js";
@@ -28,9 +28,10 @@ export const ACTIVE_DELIVERY_STATUSES = [
 const partnerUserId = (p) => p?.user?._id?.toString();
 
 const PARTNER_ORDER_POPULATE = [
-  { path: "restaurant", select: "name location city latitude longitude" },
+  { path: "restaurant", select: "name location city latitude longitude phone" },
   { path: "customer", select: "name phone email" },
   { path: "items.menuItem", select: "name price" },
+  { path: "deliveryPartner", select: "name phone" },
 ];
 
 const pushStatusUpdate = (order, status, note) => {
@@ -343,7 +344,10 @@ export const getMyDeliveryHistory = async (req, res, next) => {
 
 /** Load the order and verify the requesting partner is the assignee. */
 const loadAssignedOrder = async (req) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id)
+    .populate("customer", "name phone email")
+    .populate("restaurant", "name phone address")
+    .populate("deliveryPartner", "name phone");
   if (!order) return { error: { status: 404, message: "Order not found" } };
   if (!order.deliveryPartner || order.deliveryPartner.toString() !== req.user._id.toString()) {
     return { error: { status: 403, message: "You are not assigned to this order" } };

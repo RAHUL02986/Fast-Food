@@ -20,8 +20,15 @@ const orderSchema = new mongoose.Schema(
     paymentMethod: { type: String, enum: ["card", "wallet", "cash", "upi"], default: "card" },
     paymentStatus: { type: String, enum: ["pending", "completed", "failed"], default: "pending" },
     paymentId: String,
-    // Order channel: delivery (online order) or dine-in (ordered from a table)
-    type: { type: String, enum: ["delivery", "dine-in"], default: "delivery" },
+    // Snapshot of the coupon applied at order time (validated server-side in createOrder)
+    coupon: {
+      code: String,
+      discountType: { type: String, enum: ["percentage", "flat"] },
+      discountValue: Number,
+      discountAmount: Number,
+    },
+    // Order channel: delivery (online order), dine-in (ordered from a table), or pickup (customer picks up)
+    type: { type: String, enum: ["delivery", "dine-in", "pickup"], default: "delivery" },
     table: { type: mongoose.Schema.Types.ObjectId, ref: "Table" },
     booking: { type: mongoose.Schema.Types.ObjectId, ref: "Booking" },
     deliveryAddress: {
@@ -55,6 +62,7 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     estimatedDeliveryTime: Date,
+    estimatedPickupTime: Date,
     actualDeliveryTime: Date,
     deliveryPartner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     // ---------- Delivery lifecycle ----------

@@ -99,7 +99,9 @@ export default function TablePage() {
       sessionStorage.setItem("qf-checkout", JSON.stringify({
         cart, type: "dine-in", tableId: table._id, tableName: table.name, restaurantId: restaurant._id,
       }));
-      router.push("/login");
+      // Guests continue on the checkout page — it asks them to log in / sign up
+      // as the first step instead of blocking the order here.
+      router.push("/checkout");
       return;
     }
 

@@ -1,6 +1,6 @@
 # Data Models
 
-All 11 Mongoose schemas live in `backend/src/models/`. Every schema uses `{ timestamps: true }` (adds `createdAt` / `updatedAt`).
+All 17 Mongoose schemas live in `backend/src/models/`. Every schema uses `{ timestamps: true }` (adds `createdAt` / `updatedAt`).
 
 ## User (`User.js`)
 | Field | Type | Notes |
@@ -51,13 +51,34 @@ Indexes: text (`name`, `cuisine`, `city`), `{ city: 1, status: 1 }`.
 
 Index: `{ restaurant: 1, category: 1 }`.
 
+## Coupon (`Coupon.js`)
+| Field | Type | Notes |
+|---|---|---|
+| `restaurant` | ObjectId → Restaurant, required | |
+| `code` | String, required | uppercased; unique **per restaurant** (`{ restaurant, code }`) |
+| `description` | String | |
+| `discountType` | `percentage` \| `flat`, required | `%` off or `₹` off |
+| `discountValue` | Number, required, min 1 | ≤ 100 for percentage |
+| `minOrderAmount` | Number, default 0 | checked against the **eligible items** subtotal |
+| `maxDiscount` | Number | cap for percentage coupons (ignored for flat) |
+| `applyToAllItems` | Boolean, default false | true → entire menu |
+| `applicableItems[]` | ObjectId → MenuItem | the assigned products (empty when `applyToAllItems`) |
+| `validFrom` / `validUntil` | Date | |
+| `usageLimit` / `usedCount` | Number | 0 = unlimited; `usedCount` incremented per placed order |
+| `isActive` | Boolean, default true | owner kill-switch |
+
+Indexes: unique `{ restaurant: 1, code: 1 }`, `{ restaurant: 1, isActive: 1, validUntil: 1 }`.
+
+Discount math (server-side only, in `couponController.evaluateCouponForCart`): the discount applies **only to the items covered by the coupon**; percentage discounts are capped by `maxDiscount`; the discount can never exceed the eligible subtotal; 5% tax is then charged on `subtotal − discount`.
+
 ## Order (`Order.js`)
 | Field | Type | Notes |
 |---|---|---|
 | `orderNumber` | String | `ORD-...` |
 | `customer` / `restaurant` | ObjectId, required | |
 | `items[]` | `{ menuItem → MenuItem, quantity, price, specialInstructions }` | price snapshotted at order time |
-| `subtotal`, `deliveryCharge`, `tax`, `total` | Number | all server-calculated (5% tax) |
+| `subtotal`, `deliveryCharge`, `tax`, `total` | Number | all server-calculated (5% tax, charged after coupon discount) |
+| `coupon` | `{ code, discountType, discountValue, discountAmount }` | snapshot of the applied coupon — validated server-side at order time |
 | `paymentMethod` | `card` \| `wallet` \| `cash` \| `upi` | |
 | `paymentStatus` | `pending` \| `completed` \| `failed` | |
 | `type` | `delivery` \| `dine-in` | |

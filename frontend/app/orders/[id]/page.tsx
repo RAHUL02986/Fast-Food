@@ -132,10 +132,10 @@ export default function OrderDetailsPage() {
       <div className="max-w-4xl mx-auto p-8">
         {/* Order Header */}
         <div className="bg-white p-8 rounded-lg shadow mb-6">
-          <div className="flex justify-between items-start mb-6">
+          <div className="flex flex-col md:flex-row md:gap-0 gap-4 justify-between items-start mb-6">
             <div>
               <p className="text-gray-600 text-sm">Order Number</p>
-              <h1 className="text-3xl font-bold">
+              <h1 className="text-xl md:text-3xl font-bold">
                 {order.orderNumber}
                 {order.type === "dine-in" && (
                   <span className="ml-3 align-middle text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-bold">
@@ -149,7 +149,7 @@ export default function OrderDetailsPage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
               <p className="text-gray-600 text-sm">Restaurant</p>
               <p className="font-semibold">{order.restaurant?.name}</p>
@@ -261,6 +261,12 @@ export default function OrderDetailsPage() {
               <span className="text-gray-600">Subtotal</span>
               <span className="font-semibold">₹{order.subtotal}</span>
             </div>
+            {order.coupon?.code && (
+              <div className="flex justify-between text-green-700">
+                <span>Coupon ({order.coupon.code})</span>
+                <span className="font-semibold">- ₹{order.coupon.discountAmount}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-gray-600">Tax (5%)</span>
               <span className="font-semibold">₹{order.tax}</span>
@@ -276,16 +282,58 @@ export default function OrderDetailsPage() {
           </div>
         </div>
 
-        {/* Status Timeline — horizontal stepper */}
+        {/* Status Timeline - vertical on mobile, horizontal on desktop */}
         {order.statusUpdates && order.statusUpdates.length > 0 && (
-          <div className="bg-white p-8 rounded-lg shadow mb-6">
-            <h2 className="text-xl font-bold mb-6">Order Timeline</h2>
-            <ol className="flex items-start">
+          <div className="bg-white p-4 sm:p-8 rounded-lg shadow mb-6">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Order Timeline</h2>
+
+            {/* Mobile: Vertical Timeline */}
+            <ol className="sm:hidden space-y-4">
+              {order.statusUpdates.map((update: any, index: number) => {
+                const isLast = index === order.statusUpdates.length - 1;
+                return (
+                  <li key={index} className="flex gap-3 relative">
+                    {/* Vertical connector line */}
+                    {!isLast && (
+                      <span
+                        className={`absolute left-4 top-8 w-0.5 h-full ${
+                          update.status === order.status || index < order.statusUpdates.length - 2
+                            ? "bg-orange-500"
+                            : "bg-gray-200"
+                        }`}
+                      />
+                    )}
+                    {/* Dot */}
+                    <div
+                      className={`relative z-10 flex items-center justify-center h-8 w-8 rounded-full text-white text-sm font-bold shrink-0 ${
+                        update.status === order.status
+                          ? "bg-orange-600 ring-4 ring-orange-200"
+                          : "bg-orange-500"
+                      }`}
+                    >
+                      ✓
+                    </div>
+                    {/* Labels */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold capitalize">
+                        {update.status.replace(/_/g, " ")}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {update.timestamp ? new Date(update.timestamp).toLocaleString() : "Pending"}
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+
+            {/* Desktop: Horizontal Timeline */}
+            <ol className="hidden sm:flex items-start">
               {order.statusUpdates.map((update: any, index: number) => {
                 const isLast = index === order.statusUpdates.length - 1;
                 return (
                   <li key={index} className="flex-1 flex flex-col items-center relative">
-                    {/* connector line to the next step */}
+                    {/* Horizontal connector line */}
                     {!isLast && (
                       <span
                         className={`absolute top-4 left-1/2 w-full h-0.5 ${
@@ -295,7 +343,7 @@ export default function OrderDetailsPage() {
                         }`}
                       />
                     )}
-                    {/* dot */}
+                    {/* Dot */}
                     <div
                       className={`relative z-10 flex items-center justify-center h-8 w-8 rounded-full text-white text-sm font-bold ${
                         update.status === order.status
@@ -305,7 +353,7 @@ export default function OrderDetailsPage() {
                     >
                       ✓
                     </div>
-                    {/* labels */}
+                    {/* Labels */}
                     <p className="mt-2 text-sm font-semibold text-center capitalize whitespace-nowrap">
                       {update.status.replace(/_/g, " ")}
                     </p>

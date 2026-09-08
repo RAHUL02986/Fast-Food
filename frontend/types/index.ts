@@ -88,7 +88,57 @@ export interface MenuItem {
   updatedAt?: string;
 }
 
-export type OrderType = "delivery" | "dine-in";
+export type OrderType = "delivery" | "dine-in" | "pickup";
+
+/* ---------- Coupons (owner-created, product-assignable) ---------- */
+export type CouponDiscountType = "percentage" | "flat";
+
+export interface Coupon {
+  _id: string;
+  restaurant?: string | Restaurant;
+  /** Stored uppercase; unique per restaurant */
+  code: string;
+  description?: string;
+  discountType: CouponDiscountType;
+  /** % off for "percentage", ₹ off for "flat" */
+  discountValue: number;
+  /** Minimum eligible-items subtotal required */
+  minOrderAmount?: number;
+  /** Cap for percentage coupons */
+  maxDiscount?: number;
+  /** true → entire menu; false → only applicableItems */
+  applyToAllItems: boolean;
+  /** Products the coupon can be used on (populated with MenuItem on owner endpoints) */
+  applicableItems?: (MenuItem | string)[];
+  validFrom?: string;
+  validUntil: string;
+  /** 0 = unlimited */
+  usageLimit?: number;
+  usedCount?: number;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+/** Response of POST /coupons/validate */
+export interface CouponValidation {
+  code: string;
+  description?: string;
+  discountType: CouponDiscountType;
+  discountValue: number;
+  discountAmount: number;
+  eligibleSubtotal: number;
+  applyToAllItems: boolean;
+}
+
+/** Snapshot stored on an order when a coupon was applied */
+export interface OrderCoupon {
+  code: string;
+  discountType: CouponDiscountType;
+  discountValue?: number;
+  discountAmount?: number;
+}
+
 export type OrderStatus =
   | "placed"
   | "confirmed"
@@ -219,6 +269,8 @@ export interface Order {
   deliveryCharge?: number;
   tax?: number;
   total?: number;
+  /** Present when a coupon was applied at checkout */
+  coupon?: OrderCoupon;
   paymentMethod?: "card" | "wallet" | "cash" | "upi";
   paymentStatus?: "pending" | "completed" | "failed";
   paymentId?: string;
@@ -232,6 +284,7 @@ export interface Order {
   delivery?: DeliveryInfo;
   assignmentHistory?: AssignmentHistoryEntry[];
   estimatedDeliveryTime?: string;
+  estimatedPickupTime?: string;
   actualDeliveryTime?: string;
   deliveryPartner?: User | string | null;
   rating?: number;

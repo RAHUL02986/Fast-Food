@@ -58,11 +58,28 @@ curl -X POST http://localhost:4000/api/auth/login \
 | DELETE | `/:id` | owner | Delete item |
 | PATCH | `/:id/availability` | owner | Toggle availability |
 
+## Coupons (`/restaurants/:restaurantId/coupons`)
+
+Owner-created coupons, assignable to the **entire menu or one/multiple specific products**.
+
+| Method | Path | Auth | Description |
+|---|---|---|---|
+| GET | `/` | — / owner | Live coupons (active, in-date, under usage limit). Owners add `?all=true` for every coupon |
+| POST | `/validate` | — | `{ code, items: [{ menuItem, quantity }] }` → discount preview. Re-prices the cart from the DB |
+| POST | `/` | owner | `{ code, discountType: "percentage"\|"flat", discountValue, applyToAllItems, applicableItems?, minOrderAmount?, maxDiscount?, validFrom?, validUntil, usageLimit? }` |
+| PUT | `/:id` | owner | Same body as POST — full update |
+| PATCH | `/:id/status` | owner | `{ isActive }` — activate/deactivate |
+| DELETE | `/:id` | owner | Remove the coupon |
+
+Validation at order time: coupon must be active, within its validity window, under its usage limit, and the cart must contain at least one assigned product meeting `minOrderAmount`. The discount applies only to eligible items; percentage discounts respect `maxDiscount`; 5% tax is computed on the discounted amount.
+
+## Orders (`/orders`)
+
 ## Orders (`/orders`)
 
 | Method | Path | Auth | Description |
 |---|---|---|---|
-| POST | `/` | customer | `{ items: [{ menuItem, quantity }], restaurant, type, paymentMethod, deliveryAddress?, table?, booking? }` — server re-prices everything |
+| POST | `/` | customer | `{ items: [{ menuItem, quantity }], restaurant, type, paymentMethod, deliveryAddress?, table?, booking?, couponCode? }` — server re-prices everything and re-validates the coupon |
 | GET | `/` | any | Own orders (customers), restaurant orders (owners). Query: `status`, `type`, `restaurantId`, `date`. Populates `restaurant.name`, `customer.name/phone`, `table.name`, `items.menuItem.name` |
 | GET | `/daily-summary` | owner | `{ date, ordersToday, revenueToday, deliveryOrders, dineInOrders, activeOrders, bookingsToday, statusBreakdown }` |
 | GET | `/:id` | any | Order detail — populates full restaurant, customer, `items.menuItem`, table |

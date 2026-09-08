@@ -7,6 +7,7 @@ import { apiLimiter } from "./middleware/rateLimit.js";
 import authRoutes from "./routes/authRoutes.js";
 import restaurantRoutes from "./routes/restaurantRoutes.js";
 import menuRoutes from "./routes/menuRoutes.js";
+import couponRoutes from "./routes/couponRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import tableRoutes from "./routes/tableRoutes.js";
@@ -63,6 +64,7 @@ app.get("/health", (_, res) =>
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/restaurants/:restaurantId/menu", menuRoutes);
+app.use("/api/restaurants/:restaurantId/coupons", couponRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/tables", tableRoutes);

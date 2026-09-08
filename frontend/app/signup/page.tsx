@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 import { deliveryAPI, uploadAPI } from "@/lib/api";
@@ -42,6 +42,12 @@ export default function SignupPage() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  // `?next=` support — the checkout page sends guests here with ?next=/checkout
+  const [nextPath, setNextPath] = useState("");
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get("next");
+    if (p && p.startsWith("/") && !p.startsWith("//")) setNextPath(p);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -126,6 +132,9 @@ export default function SignupPage() {
         router.push("/admin");
       } else if (user.role === "owner") {
         router.push("/owner/dashboard");
+      } else if (nextPath) {
+        // Return the new customer to where they were heading (e.g. checkout)
+        router.push(nextPath);
       } else {
         router.push("/dashboard");
       }
@@ -399,7 +408,10 @@ export default function SignupPage() {
           <div className="mt-6 pt-6 border-t border-gray-200">
             <p className="text-center text-sm text-gray-600">
               Already have an account?{" "}
-              <Link href="/login" className="text-orange-600 hover:text-orange-700 font-bold">
+              <Link
+                href={nextPath ? `/login?next=${encodeURIComponent(nextPath)}` : "/login"}
+                className="text-orange-600 hover:text-orange-700 font-bold"
+              >
                 Sign in
               </Link>
             </p>
